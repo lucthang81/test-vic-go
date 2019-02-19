@@ -1,0 +1,43 @@
+<html>
+	<head>
+		
+		{{template "header_link_script" .}}
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		
+		<h2>Create new system room</h2>
+		{{.form}}
+
+		<h2>System Room list</h2>
+		<table class="table">
+		<tr>
+			<th>ID</th>
+			<th>Nhà cái</th>
+			<th>Người chơi</th>
+			<th>Requirement</th>
+			<th>Đang đánh</th>
+			<th></th>
+		</tr>
+		{{range .rooms}}
+		<tr>
+			<td>{{.id}}</td>
+			{{if eq .owner_id 0}}
+			<td>Không có nhà cái</td>
+			{{else}}
+			<td><a {{if eq .owner.player_type "normal"}} class="text-danger" {{end}} href="/admin/player/{{.owner.id}}/history">Id:{{.owner.id}}, {{.owner.username}}</a>,${{.owner.money}}</td>
+			{{end}}
+			<td>
+				{{range .player_list}}
+				<ul>
+					<li><a {{if eq .player_type "normal"}} class="text-danger" {{end}} href="/admin/player/{{.id}}/history">Id:{{.id}}, {{.username}}</a>,${{.money}}</li>
+				</ul>
+				{{end}}
+			</td>
+			<td>{{.requirement}}</td>
+			<td>{{if eq .is_playing true}}Có{{else}}Không{{end}}</td>
+		</tr>
+		{{end}}
+	</table>
+	</body>
+</html>

@@ -1,0 +1,10 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+	</head>
+	<body style="margin: 20px;">
+		{{ template "nav" .}}
+		<div class="alert alert-danger" role="alert">{{.error}}</div>
+		<p><a class="btn btn-primary btn-lg" href="{{.back_url}}" role="button">Go back</a></p>
+	</body>
+</html>

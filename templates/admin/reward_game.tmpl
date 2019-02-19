@@ -1,0 +1,64 @@
+<html>
+	<head>
+	</head>
+	<body style="margin: 20px;">
+		{{$gameCode := .game_code}}
+		<h2> Total Gain </h2>
+		<table>
+			<tr>
+				<th>Image</th>
+				<th>From Rank</th>
+				<th>To Rank</th>
+				<th>Prize</th>
+				<th></th>
+				<th></th>
+			</tr>
+			{{range .total_gain}}
+
+			<tr>
+				<td><img src="{{.image_url}}" width="230px" height="230px"/></th>
+				<td>{{.from_rank}}</td>
+				<td>{{.to_rank}}</td>
+				<td>{{.prize}}</td>
+				<td><a href="/admin/reward/delete_reward?id={{.id}}&reward_type=total_gain&game_code={{$gameCode}}">Delete</a></td>
+				<td><a href="/admin/reward/edit_reward?id={{.id}}&reward_type=total_gain&game_code={{$gameCode}}">Edit</a></td>
+			</tr>
+			{{ end }}
+		</table>
+
+		<h2> Big Win </h2>
+		<table>
+			<tr>
+				<th>Image</th>
+				<th>From Rank</th>
+				<th>To Rank</th>
+				<th>Prize</th>
+				<th></th>
+			</tr>
+			{{range .biggest_win}}
+
+			<tr>
+				<td><img src="{{.image_url}}" width="230px" height="230px"/></th>
+				<td>{{.from_rank}}</td>
+				<td>{{.to_rank}}</td>
+				<td>{{.prize}}</td>
+				<td><a href="/admin/reward/delete_reward?id={{.id}}&reward_type=biggest_win&game_code={{$gameCode}}">Delete</a></td>
+				<td><a href="/admin/reward/edit_reward?id={{.id}}&reward_type=total_gain&game_code={{$gameCode}}">Edit</a></td>
+			</tr>
+			{{ end }}
+		</table>
+
+		<h2>Create new reward</h2>
+		<form action="/admin/reward/create_reward" method="POST" class="pure-form" enctype="multipart/form-data">
+			<input type="text" name="from_rank" placeholder="from rank" /></br>
+			<input type="text" name="to_rank" placeholder="to rank" /></br>
+			<input type="text" name="prize" placeholder="prize" /></br>
+    		<input type="file" name="image_url" id="image_url"></br>
+			
+			<INPUT TYPE="radio" NAME="type" VALUE="total_gain">Total Gain
+			<INPUT TYPE="radio" NAME="type" VALUE="biggest_win">Big Win
+			<input type="hidden" name="game_code" value="{{.game_code}}" /></br>
+			<input type="submit" value="submit" class="pure-button pure-button-primary"/>
+		</form>
+	</body>
+</html>

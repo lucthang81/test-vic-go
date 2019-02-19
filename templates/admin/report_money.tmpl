@@ -1,0 +1,126 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/report/money" method="GET" class="pure-form" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="start_date">Start date (Vietnamese time)</label>
+						<input type="text" id="start_date" name="start_date" class="form-control" placeholder="Start date" value="{{.start_date}}" />
+					</div>
+					<div class="form-group">
+						<label for="end_date">End date (Vietnamese time)</label>
+						<input type="text" id="end_date" name="end_date" class="form-control" placeholder="End date" value="{{.end_date}}" />
+					</div>
+					<div class="radio">
+						<label class="radio-inline">
+							<input type="radio" name="currency_type" id="currency_type" value="money"  {{if eq .currency_type "money"}} checked="checked" {{ end }}> Tiền thật <br/>
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="currency_type" id="currency_type" value="test_money"  {{if eq .currency_type "test_money"}} checked="checked" {{ end }}> Tiền ảo <br/>
+						</label>
+					</div>
+					<input type="submit" value="Refresh" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+
+
+
+	<h2>Summary</h2>
+
+	Tổng tiền cashout: {{.payment}} <br/>
+
+	<hr>
+	<h3>Phế</h3>
+	(1) Tổng tiền phế cashout: {{.payment_tax}} <br/>
+	(2) Tổng tiền phế tất cả các game: {{.match_tax}} <br/>
+	(1) + (2) Tổng phế: {{.total_tax}}
+	<table class="table">
+		<tr>
+			<th>Game</th>
+			<th>Tax</th>
+		</tr>
+		{{range $key,$value := .tax_data}}
+		<tr>
+			<td>{{$key}}</td>
+			<td>{{$value}}</td>
+		</tr>
+		{{end}}
+	</table>
+	<hr>
+
+
+	{{.game_data}}
+	<h3>Quỹ (bank) của mỗi game (toàn bộ, ko tính theo thời gian)</h3>
+	<table class="table">
+		<tr>
+			<th>Game</th>
+			<th>Quỹ (bank)</th>
+		</tr>
+		{{range $key,$value := .bank_data}}
+		<tr>
+			<td>{{$key}}</td>
+			<td>{{$value}}</td>
+		</tr>
+		{{end}}
+	</table>
+	<hr>
+
+
+
+	<hr>
+	Tổng tiền nạp thẻ: {{.total_purchase_by_card}} <br/>
+	<br/>
+	(1) Tổng tiền admin cho bot: {{.money_add_to_bot}} <br/>
+	(2) Tổng tiền admin cho người chơi: {{.money_add_to_user}} <br/>
+	(1) + (2) Tổng tiền admin cho: {{.money_add_to_all}} <br/>
+	<br/>
+	(1) Tổng tiền cho lúc tạo account cho bot: {{.money_add_when_start_to_bot}} <br/>
+	(2) Tổng tiền cho lúc tạo account cho người chơi: {{.money_add_when_start_to_user}} <br/>
+	(1) + (2) Tổng tiền cho lúc tạo account: {{.money_add_when_start_to_all}} <br/>
+	<br/>
+	<hr>
+	(1) Tổng tiền bot đang có: {{.total_bot_money}} <br/>
+	(2) Tổng tiền bot đã thắng: {{.total_bot_win}} <br/>
+	(1) + (2) Tổng tiền bot đã thua: {{.total_bot_lose}} <br/>
+
+	<hr>
+
+
+	<h3>Old report</h3>
+
+	Total Payment: {{ .payment }} <br/>
+	Total Purchase: {{ .purchase }} <br/>
+
+	Total user win: {{ .win }} <br/>
+	Total user lose: {{ .lose }} <br/>
+
+	Total Bot Win: {{ .bot_win }} <br/>
+	Total Bot Lose: {{ .bot_lose }} <br/>
+
+	Total Tax: {{ .tax }} <br/>
+	Total bet: {{ .bet }} <br/>
+
+	Win/Bet: {{ .win_bet }} </br>
+	Lose/Bet: {{ .lose_bet }} </br>
+	Win/Lose: {{ .win_lose }} </br>
+
+	System gain money by payment/purchase: {{ .system_gain_by_payment_purchase }} </br>
+	System gain money by game: {{ .system_gain_by_game }} </br>
+	</body>
+</html>

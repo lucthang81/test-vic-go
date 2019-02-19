@@ -1,0 +1,1 @@
+Put game config here, game config file will be created here if not exist yet

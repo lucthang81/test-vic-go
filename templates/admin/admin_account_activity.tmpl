@@ -1,0 +1,91 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				var numPages = {{ .num_pages }}
+				var page = {{ .page }}
+				var paginationUl = $(".pagination")
+				var prevPage = page - 1
+				var prevAddress = "/admin/admin_account/activity?page="+prevPage
+				var preLi = $( "<li>"+
+						      "<a href=\""+prevAddress+"\" aria-label=\"Previous\">"+
+						        "<span aria-hidden=\"true\">&laquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == 1) {
+					preLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(preLi)
+				}
+
+
+				var skip = false
+				if (numPages > 10) {
+					skip = true
+				}
+				var nextLiWillBeSkipLi = false
+				for (i = 1; i <= numPages; i++) {
+					if (i <= 3 || i >= numPages - 2 || (i >= page - 2 && i <= page + 2)) {
+						var address = "/admin/admin_account/activity?page="+i
+
+						var elementLi = $("<li><a href=\""+address+"\">"+i+"</a></li>")
+						if (i == page) {
+							elementLi.addClass("disabled")
+						}
+						paginationUl.append(elementLi)
+					}else if (i == page - 3 || i == page + 3) {
+						var skipLi = $( "<li class=\"disabled\">"+
+						      "<a href=\"#\" aria-label=\"Skip\">"+
+						        "<span aria-hidden=\"true\">...</span>"+
+						      "</a>"+
+						    "</li>")
+						paginationUl.append(skipLi)
+					}
+				}
+
+				var nextPage = page + 1
+				var nextAddress = "/admin/admin_account/activity?page="+nextPage
+				var nextLi = $("<li>"+
+						      "<a href=\""+nextPage+"\" aria-label=\"Next\">"+
+						        "<span aria-hidden=\"true\">&raquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == numPages) {
+					nextLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(nextLi)
+				}
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+	<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Admin id</th>
+				<th>Username</th>
+				<th>Possible ips</th>
+				<th>Date time</th>
+			</tr>
+			{{range .results}}
+			<tr>
+				<td>{{.id}}</td>
+				<td>{{.admin_id}}</td>
+				<td>{{.username}}</td>
+				<td>{{.possible_ips}}</td>
+				<td>{{.created_at}}</td>
+			</tr>
+			{{ end }}
+		</table>		
+<nav>
+  <ul class="pagination">
+  </ul>
+</nav>
+	</body>
+</html>

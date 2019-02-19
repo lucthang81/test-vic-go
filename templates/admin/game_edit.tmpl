@@ -1,0 +1,30 @@
+<html>
+	<head>
+		
+		{{template "header_link_script" .}}
+
+		{{.script}}
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+		{{.currency_form}}
+		<hr>
+
+		<div class="row">
+		{{.form}}
+		</div>
+
+
+	<h2>Bet data</h2>
+			Bot Budget: {{.bot_budget}} <br/>
+			{{.bet_data}}
+			
+
+		<a href="/admin/game/{{ .game_code }}/bet_data/add?currency_type={{.currency_type}}" class="btn btn-primary">Add more bet data</a>
+			<hr>
+		<a href="/admin/game/{{ .game_code }}/help/edit?currency_type={{.currency_type}}" class="btn btn-primary">Edit game help</a>
+		<a href="/admin/game/{{ .game_code }}/advance?currency_type={{.currency_type}}" class="btn btn-primary">Advance settings</a>
+		<a href="/admin/game/{{ .game_code }}/advance_record" class="btn btn-primary">Advance record</a>
+	</body>
+</html>

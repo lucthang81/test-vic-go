@@ -1,0 +1,36 @@
+{
+	"root_directory":"/home/tungdt/go/src/github.com/vic/vic_go",
+
+	"socket_address":":2053", 
+	"http_address":":2082",
+	"vicManagerAddress": ":2086",
+	"httpGetUserInfoAddress": ":2096",
+	"IPNListenerAddress": ":8880",
+
+	"enable_admin_email":false,
+	"enable_log_to_file":true,
+	
+	"facebook_app_token":"// config in func verifyAccessToken",
+
+	"http_root_url":"http://localhost:4006",
+
+	"static_folder":"/home/tungdt/go/src/github.com/vic/vic_go/public/static",
+	"static_root":"http://127.0.0.1:4006",
+
+	"media_folder":"/home/tungdt/go/src/github.com/vic/vic_go/public/media",
+	"media_root":"http://127.0.0.1:4005",
+
+	"sql_init_file": "sql/init_schema.sql",
+	"sql_migrate_file": "sql/migrate_schema.sql",
+	
+	"ssl_pem_path":"",
+	"ssl_key_path":"",
+
+	"system_log_folder":"/home/tungdt/go/src/github.com/vic/vic_go/conf/log",
+	
+	"note1": "use redis db 2 to cache user's info, flush on reset",
+	"note2": "use redis db 3 to save event info",
+	"note3": "use redis db 4 to save event_player info",
+	"note4": "use redis db 6 to save misc",
+	"note5": "can use port 8880"
+}

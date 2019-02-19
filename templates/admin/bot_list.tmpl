@@ -1,0 +1,146 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				var numPages = {{ .num_pages }}
+				var page = {{ .page }}
+				var paginationUl = $(".pagination")
+				var prevPage = page - 1
+				var prevAddress = "/admin/bot?keyword={{.keyword}}&sort_type={{.sort_type}}&page="+prevPage
+				var preLi = $( "<li>"+
+									"<a href=\""+prevAddress+"\" aria-label=\"Previous\">"+
+												"<span aria-hidden=\"true\">&laquo;</span>"+
+									"</a>"+
+						"</li>")
+				if (page == 1) {
+					preLi.addClass("disabled")
+				}
+				if (numPages > 0) {
+					paginationUl.append(preLi)
+				}
+				var skip = false
+				if (numPages > 10) {
+					skip = true
+				}
+				var nextLiWillBeSkipLi = false
+				for (i = 1; i <= numPages; i++) {
+					if (i <= 3 || i >= numPages - 2 || (i >= page - 2 && i <= page + 2)) {
+						var address = "/admin/bot?keyword={{.keyword}}&sort_type={{.sort_type}}&page="+i
+						var elementLi = $("<li><a href=\""+address+"\">"+i+"</a></li>")
+						if (i == page) {
+							elementLi.addClass("disabled")
+						}
+						paginationUl.append(elementLi)
+					}else if (i == page - 3 || i == page + 3) {
+						var skipLi = $( "<li class=\"disabled\">"+
+									"<a href=\"#\" aria-label=\"Skip\">"+
+												"<span aria-hidden=\"true\">...</span>"+
+									"</a>"+
+						"</li>")
+						paginationUl.append(skipLi)
+					}
+				}
+				var nextPage = page + 1
+				var nextAddress = "/admin/bot?keyword={{.keyword}}&sort_type={{.sort_type}}&page="+nextPage
+				var nextLi = $("<li>"+
+									"<a href=\""+nextPage+"\" aria-label=\"Next\">"+
+												"<span aria-hidden=\"true\">&raquo;</span>"+
+									"</a>"+
+						"</li>")
+				if (page == numPages) {
+					nextLi.addClass("disabled")
+				}
+				if (numPages > 0) {
+					paginationUl.append(nextLi)
+				}
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/bot" method="GET" class="pure-form" enctype="multipart/form-data">
+					<div class="form-group" >
+						<label for="sort_type">Sort</label>
+						<div class="radio">
+							<label class="radio-inline">
+								<input type="radio" name="sort_type" id="sort_type" value=""  {{if eq .sort_type ""}} checked="checked" {{ end }}> Ngày tạo <br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="sort_type" id="sort_type" value="money"  {{if eq .sort_type "money"}} checked="checked" {{ end }}> Money <br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="sort_type" id="sort_type" value="purchase"  {{if eq .sort_type "purchase"}} checked="checked" {{ end }}> Nạp thẻ<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="sort_type" id="sort_type" value="payment"  {{if eq .sort_type "payment"}} checked="checked" {{ end }}> Cashout<br/>
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="keyword">Search(id or username):</label>
+						<input type="text" name="keyword" class="form-control" placeholder="Keyword" value="{{.keyword}}" />
+					</div>
+					<input type="submit" value="Refresh" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/bot/add_money" method="POST" class="pure-form" enctype="multipart/form-data">
+					<input type="hidden" name="keyword" value="{{.keyword}}" />
+					<input type="hidden" name="page" value="{{.page}}" />
+					<div class="form-group">
+						<label for="amount">Amount to add for all bot:</label>
+						<input type="text" name="amount" class="form-control" placeholder="Amount" />
+					</div>
+				          <div class="form-group">
+				            <label for="password">Password (for action)</label>
+				            <input type="password" name="password_action" class="form-control" placeholder="Password (for action)" />
+				          </div>
+					<input type="submit" value="Add" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+		
+		<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Username</th>
+				<th>Type</th>
+				<th>Avatar</th>
+				<th>Facebook id</th>
+				<th>Email</th>
+				<th>Phone number</th>
+				<th>Tiền thật</th>
+				<th>Tiền ảo</th>
+				<th>Purchase</th>
+				<th>Payment</th>
+				<th>Created at</th>
+				<th>Action</th>
+			</tr>
+			{{range .players}}
+			<tr>
+				<td><a href="/admin/player/{{.id}}/history">{{.id}}</a></td>
+				<td>{{.username}}</td>
+				<td>{{.player_type}}</td>
+				<td><img src="{{.avatar}}" width="200px" height="200px"/></td>
+				<th>{{.facebook_user_id}}</th>
+				<th>{{.email}}</th>
+				<th>{{.phone_number}}</th>
+				<th>{{.money}}</th>
+				<th>{{.test_money}}</th>
+				<th>{{.purchase}}</th>
+				<th>{{.payment}}</th>
+				<td>{{.created_at}}</td>
+			</tr>
+			{{ end }}
+		</table>
+		<nav>
+			<ul class="pagination">
+			</ul>
+		</nav>
+	</body>
+</html>

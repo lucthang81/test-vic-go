@@ -1,0 +1,19 @@
+<html>
+	<head>
+	</head>
+	<body style="margin: 20px;">
+		<h2>Edit vip data "{{ .code }}"</h2>
+		<form action="/admin/vip_data/edit" method="POST" class="pure-form" enctype="multipart/form-data">
+			<input type="hidden" name="code" value="{{.code}}" />
+			Name <input type="text" name="name" value="{{.name}}" /> </br>
+			Requirement score <input type="text" name="requirement_score" value="{{.requirement_score}}" /> </br>
+			Time bonus multiplier <input type="text" name="time_bonus_multiplier" value="{{.time_bonus_multiplier}}" /> </br>
+			Mega time bonus multiplier <input type="text" name="mega_time_bonus_multiplier" value="{{.mega_time_bonus_multiplier}}" /> </br>
+			Leaderboard reward multiplier <input type="text" name="leaderboard_reward_multiplier" value="{{.leaderboard_reward_multiplier}}" /> </br> 
+			Purchase multiplier <input type="text" name="purchase_multiplier" value="{{.purchase_multiplier}}" /> </br>
+
+			<input type="submit" value="submit" class="pure-button pure-button-primary"/>
+		</form>
+		
+	</body>
+</html>

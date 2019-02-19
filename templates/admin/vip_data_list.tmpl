@@ -1,0 +1,33 @@
+<html>
+	<head>
+	</head>
+	<body style="margin: 20px;">
+		<h2> Vip Data List </h2>
+		<table>
+			<tr>
+				<th>Code</th>
+				<th>Name</th>
+				<th>Requirement Score</th>
+				<th>Time Bonus Multiplier</th>
+				<th>Mega Time Bonus Multiplier</th>
+				<th>Leaderboard Reward Multiplier</th>
+				<th>Purchase Multiplier</th>
+				<th></th>
+			</tr>
+			{{range .}}
+
+			<tr>
+				<td>{{.code}}</td>
+				<td>{{.name}}</td>
+				<td>{{.requirement_score}}</td>
+				<td>{{.time_bonus_multiplier}}</td>
+				<td>{{.mega_time_bonus_multiplier}}</td>
+				<td>{{.leaderboard_reward_multiplier}}</td>
+				<td>{{.purchase_multiplier}}</td>
+				<td><a href="/admin/vip_data/edit?code={{.code}}">Edit</a></td>
+			</tr>
+			{{ end }}
+		</table>
+
+	</body>
+</html>

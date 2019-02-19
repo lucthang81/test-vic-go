@@ -1,0 +1,23 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+		<h2>Current List</h2>
+		<ol>
+		{{range .current_list}}
+			<li>{{.game_code}}: {{.username}} vừa thắng to {{.value}} Keng</li>
+		{{end}}
+		</ol>
+
+		<h2>Queue</h2>
+		<ol>
+		{{range .queue}}
+			<li>{{.game_code}}: {{.username}} vừa thắng to {{.value}} Keng</li>
+		{{end}}
+		</ol>
+	</body>
+</html>

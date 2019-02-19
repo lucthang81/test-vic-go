@@ -1,0 +1,77 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+
+{{template "nav" .}}
+	<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/report/money_in_game" method="GET" class="pure-form" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="start_date">Start date (Vietnamese time)</label>
+						<input type="text" id="start_date" name="start_date" class="form-control" placeholder="Start date" value="{{.start_date}}" />
+					</div>
+					<div class="form-group">
+						<label for="start_time">Time (23:59:59):</label>
+						<input type="text" name="start_time" class="form-control" placeholder="Start time" value="{{.start_time}}" />
+					</div>
+					<div class="form-group">
+						<label for="end_date">End date (Vietnamese time)</label>
+						<input type="text" id="end_date" name="end_date" class="form-control" placeholder="End date" value="{{.end_date}}" />
+					</div>
+					<div class="form-group">
+						<label for="end_time">Time (23:59:59):</label>
+						<input type="text" name="end_time" class="form-control" placeholder="Start time" value="{{.end_time}}" />
+					</div>
+					<div class="form-group" >
+						<label for="game_code">Game</label>
+						{{ range .games}}
+						<div class="radio">
+							<label>
+								<input type="radio" name="game_code" id="optionsRadios1" value="{{.}}"  {{if eq $.game_code .}} checked="checked" {{ end }}>
+								{{ . }}
+							</label>
+						</div>
+						{{ end }}
+					</div>
+					{{.currency_input}}
+					<input type="submit" value="Refresh" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+
+
+
+	<h2>Summary</h2>
+	Total number of matches: {{.total_match}} <br/>
+
+	Total user win: {{ .win }} <br/>
+	Total user lose: {{ .lose }} <br/>
+
+	Total Bot Win: {{ .bot_win }} <br/>
+	Total Bot Lose: {{ .bot_lose }} <br/>
+
+	Total tax: {{ .tax }} <br/>
+	Total bet: {{ .bet }} <br/>
+	
+	Win/Bet: {{ .win_bet }} </br>
+	Lose/Bet: {{ .lose_bet }} </br>
+	Win/Lose: {{ .win_lose }} </br>
+
+	System gain money by game: {{ .system_gain_by_game }} </br>
+	<hr>
+
+	</body>
+</html>

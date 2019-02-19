@@ -1,0 +1,15 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+		
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+		<!-- currency -->
+		<h3>Tiền cho lúc đầu</h3>
+		{{.initial_value_form}}
+		<hr>
+		{{.game_config_form}}
+	</body>
+</html>

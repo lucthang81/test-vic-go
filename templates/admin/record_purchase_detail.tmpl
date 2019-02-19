@@ -1,0 +1,43 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		
+
+	</head>
+	<body style="margin: 20px;">
+		{{ template "nav" . }}
+
+	<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Player ID</th>
+				<th>Username</th>
+				<th>TransactionId</th>
+				<th>Card Code</th>
+				<th>Purchase</th>
+				<th>Money before</th>
+				<th>Money after</th>
+				<th>Created at</th>
+			</tr>
+			<tr>
+				<td>{{.id}}</td>
+				<td>{{.player_id}}</td>
+				<td>{{.username}}</td>
+				<td>{{.transaction_id}}</td>
+				<td>{{.card_code}}</td>
+				<td>{{.purchase}}</td>
+				<td>{{.value_before}}</td>
+				<td>{{.value_after}}</td>
+				<td>{{.created_at}}</td>
+			</tr>
+		</table>
+
+
+
+
+
+</nav>
+	</body>
+</html>
+
+

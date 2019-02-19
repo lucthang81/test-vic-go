@@ -1,0 +1,15 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		{{.script}}
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		{{.form}}
+
+		<h2>Gift</h2>
+		{{.table}}
+
+		<a href="/admin/money/gift_payment/create" class="btn btn-primary">Create gift</a>
+	</body>
+</html>

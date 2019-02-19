@@ -1,0 +1,68 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+	Game code: {{.game_code}} <br/>
+
+	{{if eq .is_minigame false}}
+
+	Tổng số phòng: {{.number_of_rooms}} <br/>
+
+	(1) Người chơi bình thường đang online: {{.online_normal_count}} <br/>
+	(2) Bot đang online: {{.online_bot_count}} <br/>
+	(1) + (2) Tổng số online: {{.online_total_count}} <br/>
+	<hr>
+
+
+	<h3>Phòng</h3>
+	<table class="table">
+		<tr>
+			<th>ID</th>
+			<th>Người chơi</th>
+			<th>Requirement</th>
+			<th>Đang đánh</th>
+			<th></th>
+		</tr>
+		{{range .rooms}}
+		<tr>
+			<td>{{.id}}</td>
+			<td>
+				{{range .player_list}}
+				<ul>
+					<li><a {{if eq .player_type "normal"}} class="text-danger" {{end}} href="/admin/player/{{.id}}/history">Id:{{.id}}, {{.username}}, {{.ip_address}}</a>,${{.money}}</li>
+				</ul>
+				{{end}}
+			</td>
+			<td>{{.requirement}}</td>
+			<td>{{if eq .is_playing true}}Có{{else}}Không{{end}}</td>
+		</tr>
+		{{end}}
+	</table>
+
+	{{else}}
+	Người chơi bình thường đang online: {{.player_count}} <br/>
+	<hr>
+
+	<h3>Player</h3>
+	<table class="table">
+		<tr>
+			<th>ID</th>
+			<th>Người chơi</th>
+			<th>Money</th>
+		</tr>
+		{{range .players}}
+		<tr>
+			<td><a href="/admin/player/{{.id}}/history">{{.id}}</a></td>
+			<td>{{.username}}</td>
+			<td>{{.money}}</td>
+		</tr>
+		{{end}}
+	</table>
+
+
+	{{end}}
+	</body>
+</html>

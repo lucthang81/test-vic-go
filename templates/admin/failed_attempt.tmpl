@@ -1,0 +1,16 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		{{.script}}
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		{{.form}}
+		<hr>
+		<h2>Reset failed attempt for all account type</h2>
+		{{.form_all}}
+
+		<hr>
+		{{.table}}
+	</body>
+</html>

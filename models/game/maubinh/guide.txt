@@ -1,0 +1,106 @@
+http://www.maubinh.com/cach-choi-game.html
+
+Số người chơi: 2 ~ 4 người
+1. CÁCH CHƠI
+
+Khi tất cả người chơi sẵn sàng, bài sẽ được chia. Nếu người chơi không sẵn sàng trong 20s khi có người chơi khác đã sẵn sàng thì người đó bị đuổi ra khỏi phòng.
+
+Người chơi có 90s để sắp xếp trước khi đọ bài.
+
+Mỗi người chơi sẽ được chia 13 lá bài, được chia thành 3 chi. Chi đầu và giữa gồm 5 lá bài. Chi cuối gồm 3 lá bài.
+
+Yêu cầu người chơi phải sắp xếp sao cho chi trước mạnh hơn chi .Nếu người chơi không tuân thủ đúng quy tắc rất dễ bị ghi nhận “ Binh Lủng” tương đương với “sập làng”
+Sức mạnh của bộ bài (chi) được căn cứ theo danh sách sau (mạnh đến yếu)
+  Tứ Quý A:  Đây là bộ bài có sức mạnh lớn nhất trong Mậu Binh phiên bản mới.
+
+
+
+. Thùng phá sảnh: các quân bài tạo nên 1 dãyliên tiếp và đồng chất(5 cây) ( chi bá không có). Thùng phá sảnh được chia là ba loại đó là thùng phá sảnh thượng, thùng phá sảnh hạ và thùng phá sảnh thường. Thùng phá sảnh thượng > thùng phá sảnh hạ > thùng phá sảnh thường
+
++ Thùng phá sảnh thượng là bộ bài từ 10 tới A
+
+Royal Flush
+
+
++ Thùng phá sảnh hạ là bộ bài từ A tới 5
+ 
+
+. Tứ quý: gồm 4 lá bài cùng số (chi 3 không có)
+
+Four of a Kind
+
+. Cù lũ: gồm 1 bộ ba và 1 đôi (chi 3 không có)
+
+Full House
+
+. Thùng: gồm 1 dãy các lá bài đồng chất (chi 3 không có)
+
+Flush
+
+. Sảnh: gồm 1 dãy liên tiếp và không đồng chất (chi 3 không có)
+
+Straight
+
+. Sám cô: gồm 1 bộ ba
+
+Three of a Kind
+
+. Thú: gồm 2 bộ đôi
+
+Two Pairs
+
+. Độn: gồm 1 bộ đôi
+
+One Pair
+
+. Mậu thầu: các lá bài không có kết hợp gì với nhau
+
+Sau khi hết thời gian hoặc tất cả người chơi sắp xếp xong thì bắt đầu đọ bài. Lần lượt, người chơi đọ chi đầu, chi giữa và chi cuối của mình với những người chơi khác. Mỗi lần đọ chi kéo dài 5s gồm lần lượt hiện bộ bài, hiện tên bộ bài, hiện số ciao thắng thua. Sau khi đọ hết cả 3 chi thì hiện bảng tổng kết.
+Nếu có người chơi được Mậu binh thắng trắng thì tất cả không cần đọ bài.
+2. PHÂN ĐỊNH THẮNG THUA, TÍNH TIỀN
+
+Các lá bài có thứ tự 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A. Riêng trường hợp sảnh thì cho phép A, 2, 3, 4, 5 tuy nhiên nó là sảnh yếu nhất.
+Người chơi mỗi lần đọ bài với các người chơi còn lại. Thắng được 1 lần tiền cược từ người thua.
+Người chơi bị Binh Lủng (chi sau mạnh hơn chi trước) thì người chơi bị xử thua cả 3 chi.
+ Sập 3 chi: Nếu một người chơi thua cả 3 chi với tất cả người chơi khác thì sẽ bị thua nhân 3. Không tính trong trường thắng trắng (mậu binh) và thoát trước khi đọ bài.
+
+Các trường hợp đặc biệt (Mậu binh thường) sẽ được thêm lần tiền cược.
+
+Tứ Quý A: nếu người chơi được tứ quý A chi đầu người chơi sẽ được 20 lần cược. Nếu may mắn người chơi đánh sập làng sẽ được nhân 80 lần cược
+
+ Sám chi cuối: Nếu người chơi thắng chi cuối bằng 1 sám cô thì sẽ được 3 lần tiền cược.
+
+. Cù lũ chi giữa: Nếu người chơi thắng chi giữa bằng 1 cù lũ thì sẽ được 2 lần tiền cược.
+
+. Tứ quý chi đầu/ giữa: Nếu người chơi thắng chi đầu/ giữa bằng 1 tứ quý thì sẽ được 4/ 8 lần tiền cược.
+
+ Thùng phá sảnh chi đầu/ giữa:
+
++ Nếu người chơi có thùng phá sảnh thượng chi đầu sẽ được 12 lần cược, còn nếu ở chi giữa các bạn sẽ có 24 lần cược
++ Thùng phá sảnh hạ chi đầu/giữa người chơi sẽ nhận được 10/20 lần mức cược
++ Nếu người chơi thắng chi đầu/ giữa bằng 1 thùng phá sảnh thường thì sẽ được 5/ 10 lần tiền cược.
+
+Các trường hợp đặc biệt (Mậu binh thắng trắng) sẽ được xử thắng tất cả ngay. (mạnh đến yếu)
+
+Rồng cuốn: gồm 13 lá bài từ 2 đến A và đồng chất. Người chơi thắng ngay tất cả người chơi và được 99 lần tiền cược
+
+Sảnh rồng: gồm 13 lá bài từ 2 đến A không đồng chất. Người chơi thắng ngay tất cả người chơi và được 39 lần tiền cược
+
+13 lá đỏ: Sau khi chia bài, người chơi được bộ bài gồm 13 lá đỏ sẽ được xử thắng trắng và được 26 lần cược
+
+13 lá đỏ: Sau khi chia bài, người chơi được bộ bài gồm 13 lá đên sẽ được xử thắng trắng và được 26 lần cược
+
+. Năm đôi một sám: gồm 5 đôi và 1 sám cô trong 13 lá bài. Người chơi thắng ngay tất cả người chơi và được 6 lần tiền cược
+
+12 đen một đỏ: bộ bài được 12 quân đen và 1 quân đỏ người chơi sẽ được xử thắng trắng và được 13 lần cược.
+
+12 đỏ một đen: Sau khi chia bài người chơi nhận được 12 lá bài đỏ và 1 lá bài đen sẽ được xử thắng trắng luôn không cần xếp bài, và được 13 lần cược
+
+ Lục phé bôn: gồm 6 đôi trong 13 lá bài. Người chơi thắng ngay tất cả người chơi và được 6 lần tiền cược
+
+ Ba thùng: gồm 3 thúng tại cả 3 chi. Người chơi thắng ngay tất cả người chơi và được 6 lần tiền cược
+
+ Ba sảnh: gồm 3 sảnh tại cả 3 chi. Người chơi thắng ngay tất cả người chơi và được 6 lần tiền cược
+
+Trường hợp người chơi thoát sau khi ván đấu bắt đầu và trước khi tất cả mọi người lật bài thì sẽ bị xử thua cả 3 chi và không bị tính là Sập 3 chi.
+Thường hợp ngươi chơi thoát khi đang đọ chi thì từ chi sau sẽ bị xử thua và vẫn có thể bị xử Sập 3 chi.

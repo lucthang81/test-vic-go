@@ -1,0 +1,60 @@
+TLMN chặt chém
+I. Thứ tự đánh
+- Người chơi có lá bài 3 bích được đánh trước ở ván đầu tiên. Từ ván thứ 2 trở đi, người nào thắng nhất ván trước sẽ được đánh trước.
+- Nếu người nhất ván trước thoát khỏi bàn trước khi ván mới bắt đầu thì người nhì sẽ được đánh trước.
+- Thoát giữa ván sẽ bị phạt (xem phần II.4)
+- Những người nào đã hoàn thành phần chơi của mình thì có thể thoát ra (tiền đã được cộng trừ).
+- Thưởng nhất nhì ba:
+4 người:
+Nhất thắng 1 lần tiền cược
+Nhì thắng 0.5 lần tiền cược
+Ba thua 0.5 lần tiền cược
+Bét thua hết cược
+3 người:
+Nhất thắng 1 lần tiền cược
+Nhì thua 0.5 lần tiền cược
+Bét thua hết cược
+2 người:
+Nhất thắng 1 lần tiền cược
+Bét thua hết cược
+
+II. Các trường thắng hợp đặc biệt:
+1. Thắng tới trắng (không cần đánh):
+- Thắng mỗi nhà 2 lần tiền cược (Tới trắng = 2 lần tiền cược x số người tham gia) xét heo, hàng.
+- Các tập hợp bao gồm (độ mạnh tăng dần từ trên xuống):
+6 đôi lẻ
+5 đôi thông
+Ba đôi thông trong đó có 3 bích (trong trường hợp bắt buộc đánh 3 bích đầu tiên)
+4 sám cô
+Tứ quí 3 (trường hợp dành cho người đánh đầu tiên)
+Tứ quí heo
+Cùng màu
+Sảnh rồng: sảnh từ 3 đến A
+- Nếu có nhiều hơn 1 người tới trắng thì: a. nếu là ván đầu của bàn ai có 3 bích sẽ thắng, b. nếu không phải là ván đầu của bàn thì lượt người nào trước người đó thắng
+2. Đánh bài tới trắng:
+- Người chơi bất kỳ đánh lần lượt hết 13 lá bài đầu tiên trong khi các người chơi còn lại không ra được lá bài nào thì người chơi đó được gọi là “Tới Trắng”. Người chơi không ra được bất kỳ quân bài nào trong 13 lá bài được gọi là “Thua Cóng”. Người “thua cóng” bị xét “Úng” heo hoặc hàng (nếu có).
+3. Trường hợp Thua Cóng:
+- Người chơi bị Thua Cóng sẽ bị thua 2 lần tiền cược và sẽ bị người chơi đến nhất xét Úng heo hoặc “Hàng” nếu có.
+4. Trường hợp người chơi thoát giữa ván chơi:
+- Người chơi sẽ bị mất toàn bộ tiền đặt vào ván chơi khi thoát ngang giữa chừng.
+5. Trường hợp người chơi về 3 bích:
+- Khi người chơi đến nhất và về lá cuối cùng là 3 bích thì sẽ ăn thêm 1 lần tiền cược từ những người chơi còn lại trong bàn.
+
+III. Luật chặt heo, chặt đôi thông, chặt tứ quý:
+Luật áp dụng cho xét cóng luôn (lúc thua rồi thì trên tay có j)
+Chặt “Heo”: "Chặt" là khái niệm để chỉ việc người chơi dùng những kết hợp đặc biệt ("hàng") để đem ra đánh "heo" (vốn rất có ưu thế) hoặc "hàng".
+Quy tắc chặt:
+Tứ Quý: chặt được 1 con heo đen, 1 con heo đỏ, 2 heo đen, 2 heo đỏ, 2 heo vừa đen vừa đỏ, 3 đôi thông nhỏ hơn, Tứ Quý nhỏ hơn.
+Ba đôi thông: chặt được 1 con heo đen, 1 con heo đỏ, 3 đôi thông nhỏ hơn.
+Bốn đôi thông: chặt được 1 con heo đen, 1 con heo đỏ, 2 heo đen, 2 heo đỏ, 2 heo vừa đen vừa đỏ, 3 đôi thông nhỏ hơn, Tứ Quý nhỏ hơn và bốn đôi thông nhỏ hơn.
+Tiền chặt thua / thắng khi bị chặt:
+(người bị chặt chung ngay cho người chặt tại thời điểm bị chặt không cần chờ hết ván)
+Heo Bích = tiền cược.
+Heo Chuồn = gấp 2 tiền cược
+Heo Rô = gấp 3 tiền cược
+Heo Cơ = gấp 4 tiền cược
+Chặt chồng 3 đôi thông = tiền thua 1 heo cơ (4 lần tiền cược)
+Chặt chồng tứ quý = tiền thua 2 heo cơ (8 lần tiền cược)
+Chặt chồng 4 đôi thông = tiền thua 3 heo cơ (12 lần tiền cược).
+Luật chặt chồng: Người A đánh heo đen, người B đánh heo đỏ, người C chặt 3 đôi thông, nếu người D chặt 3 đôi thông đó bằng ba đôi thông lớn hơn hoặc Tứ Quý hoặc 4 đôi thông thì người vừa đánh ba đôi thông sẽ phải chịu hết. Nói chung người bị chặt cuối cùng ôm hết và số tiền trả là tổng số tiền cộng lại hết.
+

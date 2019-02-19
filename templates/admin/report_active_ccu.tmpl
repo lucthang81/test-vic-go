@@ -1,0 +1,142 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+			});
+			// Load the Visualization API and the piechart package.
+		      google.load('visualization', '1.0', {'packages':['corechart']});
+
+		      // Set a callback to run when the Google Visualization API is loaded.
+		      google.setOnLoadCallback(drawChart);
+
+		      // Callback that creates and populates a data table,
+		      // instantiates the pie chart, passes in the data and
+		      // draws it.
+		      function drawChart() {
+
+		        // Create the data table.
+		        var data = google.visualization.arrayToDataTable([
+		          ['Hour', 'Total', 'Bot', 'Player'],
+				{{ range $index, $element := .results }}
+				[{{$element.created_at}}, {{$element.online_total_count}},{{$element.online_bot_count}},{{$element.online_normal_count}}],
+				{{ end }}
+		        ]);
+
+
+		        // Set chart options
+		        var options = {'title':'Active',
+		                       'width':1400,
+		                       'height':600,
+			                   legend: { position: 'bottom' }};
+
+		        // Instantiate and draw our chart, passing in some options.
+		        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+		        chart.draw(data, options);
+
+
+		        // create table game
+		     	// money
+		        {{range $chart_game_data := .games}}
+			        data = google.visualization.arrayToDataTable([
+			          ['Hour', 'Total', 'Bot', 'Player'],
+						{{ range $index, $element := $.results }}
+							{{range $game_code, $data := $element.game_online_data.money}}
+								{{if eq $chart_game_data.game_code $game_code}}
+									[{{$element.created_at}}, 
+									 {{$data.online_total_count}},
+									 {{$data.online_bot_count}},
+									 {{$data.online_normal_count}}],
+								{{end}}
+							{{end}}
+						{{ end }}
+			        ]);
+
+
+			        // Set chart options
+			        options = {'title':'{{$chart_game_data.game_code}}',
+			                       'width':1400,
+			                       'height':600,
+				                   legend: { position: 'bottom' }};
+
+			        // Instantiate and draw our chart, passing in some options.
+			        chart = new google.visualization.LineChart(document.getElementById('chart_div_money_{{$chart_game_data.game_code}}'));
+			        chart.draw(data, options);
+		        {{end}}
+
+		        // test money
+		        {{range $chart_game_data := .games}}
+			        data = google.visualization.arrayToDataTable([
+			          ['Hour', 'Total', 'Bot', 'Player'],
+						{{ range $index, $element := $.results }}
+							{{range $game_code, $data := $element.game_online_data.test_money}}
+								{{if eq $chart_game_data.game_code $game_code}}
+									[{{$element.created_at}}, 
+									 {{$data.online_total_count}},
+									 {{$data.online_bot_count}},
+									 {{$data.online_normal_count}}],
+								{{end}}
+							{{end}}
+						{{ end }}
+			        ]);
+
+
+			        // Set chart options
+			        options = {'title':'{{$chart_game_data.game_code}}',
+			                       'width':1400,
+			                       'height':600,
+				                   legend: { position: 'bottom' }};
+
+			        // Instantiate and draw our chart, passing in some options.
+			        chart = new google.visualization.LineChart(document.getElementById('chart_div_test_money_{{$chart_game_data.game_code}}'));
+			        chart.draw(data, options);
+		        {{end}}
+		      }
+		</script>
+
+
+
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/report/active/ccu" method="GET" class="pure-form" enctype="multipart/form-data">
+
+					<div class="form-group">
+						<label for="start_date">Start date (Vietnamese time)</label>
+						<input type="text" id="start_date" name="start_date" class="form-control" placeholder="Start date" value="{{.start_date}}" />
+					</div>
+					<div class="form-group">
+						<label for="end_date">End date (Vietnamese time)</label>
+						<input type="text" id="end_date" name="end_date" class="form-control" placeholder="End date" value="{{.end_date}}" />
+					</div>
+					<input type="submit" value="Refresh" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+		    <div id="chart_div"></div>
+
+		    <h2>Tiền thật</h2>
+
+			{{ range .games}}
+			<div id="chart_div_money_{{.game_code}}"></div>
+			{{ end }}
+
+			<h2>Tiền ảo</h2>
+			{{ range .games}}
+			<div id="chart_div_test_money_{{.game_code}}"></div>
+			{{ end }}
+
+
+
+		</body>
+</html>

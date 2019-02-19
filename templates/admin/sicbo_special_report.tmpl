@@ -1,0 +1,115 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{ template "nav" . }}
+
+<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/game/sicbo/advance_record" method="GET" class="pure-form" enctype="multipart/form-data">
+					{{.currency_input}}
+					<div class="form-group">
+						<label for="start_date">Start date (Vietnamese time)</label>
+						<input type="text" id="start_date" name="start_date" class="form-control" placeholder="Start date" value="{{.start_date}}" />
+					</div>
+					<div class="form-group">
+						<label for="end_date">End date (Vietnamese time)</label>
+						<input type="text" id="end_date" name="end_date" class="form-control" placeholder="End date" value="{{.end_date}}" />
+					</div>
+					<input type="submit" value="Refresh" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+
+
+
+	<h2>Summary</h2>
+	Tổng lần chơi: {{.total}} <br/>
+	Người chơi đặt cược: {{.total_bet}} <br/>
+	Người chơi thắng: {{.total_win}} <br/>
+	Người chơi thua: {{.total_lose}} <br/>
+	Hệ thống thu được: {{.system_gain}} <br/>
+	<hr>
+	Đặt vào triplet: {{.bet_on_triplet_count}} <br/>
+	Thắng triplet: {{.win_triplet_count}} <br/>
+	Tỉ lệ đặt vào triplet: {{.bet_on_triplet_percent}} <br/>
+	Tỉ lệ thắng triplet: {{.win_triplet_percent}} <br/>
+	Tỉ lệ thắng lúc đặt vào triplet: {{.win_triplet_bet_on_triplet_percent}} <br/>
+
+	<h2>Chi tiết</h2>
+	<table class="table">
+			<tr>
+				<th>Tiền đặt vào triplet</th>
+				<th>Số lần</th>
+				<th>Tỉ lệ đặt triplet</th>
+				<th>Thắng</th>
+				<th>Tỉ lệ thắng</th>
+			</tr>
+			{{range .triplet_bet_data}}
+			<tr>
+				<td>{{.bet_string}}</td>
+				<td>{{.count}}</td>
+				<td>{{.percent_count}}</td>
+				<td>{{.win}}</td>
+				<td>{{.percent_win}}</td>
+			</tr>
+			{{ end }}
+		</table>
+
+	<h2>Thắng</h2>
+	<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Player ID</th>
+				<th>Win</th>
+			</tr>
+			{{range .win_match_id_list}}
+			<tr>
+				<td>
+					<a href="/admin/match/{{.id}}">{{.id}}</a></td>
+				<td>
+					{{range .player_ids}}
+					<a href="/admin/player/{{.}}/history">{{.}}</a>
+					{{ end }}
+				</td>
+				<td>{{.win}}</td>
+			</tr>
+			{{ end }}
+		</table>
+		<h2>Cược tổng hợp</h2>
+
+	<table class="table">
+			<tr>
+				<th>Tiền đặt vào</th>
+				<th>Số lần</th>
+				<th>Tỉ lệ đặt</th>
+				<th>Thắng</th>
+				<th>Tỉ lệ thắng</th>
+			</tr>
+			{{range .bet_data}}
+			<tr>
+				<td>{{.bet_string}}</td>
+				<td>{{.count}}</td>
+				<td>{{.percent_count}}</td>
+				<td>{{.win}}</td>
+				<td>{{.percent_win}}</td>
+			</tr>
+			{{ end }}
+		</table>
+	</body>
+</html>
+
+

@@ -1,0 +1,85 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				$( "#cpu_btn" ).click(function() {
+			        $( this ).button('loading')
+					var request = $.ajax({
+					  url: "/admin/system_profile/cpu/start",
+					  method: "POST",
+					});
+					 
+					var btn = $(this)
+					request.done(function(msg) {
+				        btn.button('reset')
+						if (typeof msg["error"] === "undefined") {
+							window.location.reload(false); 		
+						}else {
+							alert( "Request failed: " + msg["error"] );
+						}
+					});
+					 
+					request.fail(function(msg) {
+				        btn.button('reset')
+					  	alert( "Request failed: " + textStatus );
+					});
+				});
+
+
+				$( "#cpu_btn_end" ).click(function() {
+			        $( this ).button('loading')
+					var request = $.ajax({
+					  url: "/admin/system_profile/cpu/stop",
+					  method: "POST",
+					});
+					 
+					var btn = $(this)
+					request.done(function(msg) {
+				        btn.button('reset')
+						if (typeof msg["error"] === "undefined") {
+							window.location.reload(false); 		
+						}else {
+							alert( "Request failed: " + msg["error"] );
+						}
+					});
+					 
+					request.fail(function(msg) {
+				        btn.button('reset')
+					  	alert( "Request failed: " + textStatus );
+					});
+				});
+
+				$( "#memory_btn" ).click(function() {
+					var request = $.ajax({
+					  url: "/admin/system_profile/memory/stop",
+					  method: "POST",
+					});
+					 
+					request.done(function(msg) {
+						if (typeof msg["error"] === "undefined") {
+							window.location.reload(false); 	
+						}else {
+							  alert( "Request failed: " + msg["error"] );	
+						}
+					});
+					 
+					request.fail(function(msg) {
+					  alert( "Request failed: " + msg );
+					});
+				});
+
+			});
+
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		<button id="cpu_btn" class="btn btn-primary" data-loading-text="Loading...">Start CPU Profile</button>
+		<button id="cpu_btn_end" class="btn btn-primary" data-loading-text="Loading...">End CPU Profile and output</button>
+		<hr>
+		<button id="memory_btn" class="btn btn-primary" data-loading-text="Loading...">Output memory profile</button>
+		<hr>
+		<a class="btn btn-primary" href="/admin/debug_online">Room debug</button>
+	</body>
+</html>

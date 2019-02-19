@@ -1,0 +1,8 @@
+table .table_list{
+    table-layout: fixed;
+}
+
+table .table_list th, td {
+    overflow: hidden;
+    width: 300px;
+}

@@ -1,0 +1,34 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+	(1) Người chơi bình thường đang online: {{.online_normal_count}} <br/>
+	(2) Bot đang online: {{.online_bot_count}} <br/>
+	(1) + (2) Tổng số online: {{.online_total_count}} <br/>
+	<hr>
+
+
+	<h3>Phòng chơi theo game</h3>
+	<table class="table">
+		<tr>
+			<th>Game</th>
+			<th>Số phòng online</th>
+			<th>Tổng người trong phòng</th>
+			<th>Tổng bot trong phòng</th>
+			<th>Tổng người chơi bình thường trong phòng</th>
+		</tr>
+		{{range $key,$value := .game_data}}
+		<tr>
+			<td><a href="/admin/debug_online/game/{{$key}}">{{$key}}<a/></td>
+			<td>{{$value.number_of_rooms}}</td>
+			<td>{{$value.online_total_count}}</td>
+			<td>{{$value.online_bot_count}}</td>
+			<td>{{$value.online_normal_count}}</td>
+		</tr>
+		{{end}}
+	</table>
+	</body>
+</html>

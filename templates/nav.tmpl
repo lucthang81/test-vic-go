@@ -1,0 +1,57 @@
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/admin/home">
+	        	<img alt="Brand" src="/images/brand.png" width="30px" height="30px" style='margin-top:-5px'>
+	      	</a>
+			{{if .for_user}}
+			<a class="navbar-brand" href="/admin/home">KengVip Online</a>
+			{{else}}
+			<a class="navbar-brand" href="/admin/home">KengVip Online Admin Tools</a>
+			{{end}}
+		</div>
+		
+		{{if .for_user}}
+		{{else}}
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			{{if .admin_username}}
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						Signed in as {{.admin_username}} <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="/admin/admin_account/change_password">Change password</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="/admin/logout">Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+				{{else}}
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="/admin/login">Login</a></li>
+				</ul>
+				{{end}}
+			</div>
+			{{end}}
+		</div>
+	</nav>
+	{{if .nav_links}}
+	<ol class="breadcrumb">
+		{{ range .nav_links }}
+		{{if eq .is_current true}}
+		<li class="active">{{.title}}</li>
+		{{else}}
+		<li><a href="{{.url}}">{{.title}}</a></li>
+		{{end}}
+		{{ end }}
+	</ol>
+	{{end}}
+	<div class="page-header">
+		<h1>{{.page_title}}</h1>
+	</div>

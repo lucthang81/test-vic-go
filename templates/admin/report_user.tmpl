@@ -1,0 +1,59 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/report/user" method="GET" class="pure-form" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="start_date">Start date (Vietnamese time)</label>
+						<input type="text" id="start_date" name="start_date" class="form-control" placeholder="Start date" value="{{.start_date}}" />
+					</div>
+					<div class="form-group">
+						<label for="end_date">End date (Vietnamese time)</label>
+						<input type="text" id="end_date" name="end_date" class="form-control" placeholder="End date" value="{{.end_date}}" />
+					</div>
+					<input type="submit" value="Refresh" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+
+
+
+	<h2>Summary</h2>
+	Total users: {{ .total_users }} <br/>
+	Total bots: {{ .total_bots }} <br/>
+	All user (users + bots): {{ .total_all_users }} <br/>
+	bot/user: {{ .bot_user }} <br/>
+
+	Paying users: {{.purchase_users}} ({{.purchase_users_percent}})<br/>
+	OTP users: {{.otp_users}} ({{.otp_users_percent}})<br/>
+
+	Current online users (real users only): {{ .current_online_users }} <br/>
+
+	<h2>In Range</h2>
+	Total users: {{ .total_users_in_range }} <br/>
+	Paying users: {{.purchase_users_in_range}} ({{.purchase_users_in_range_percent}})<br/>
+	OTP users: {{.otp_users_in_range}} ({{.otp_users_in_range_percent}})<br/>
+	Active users in time range: {{ .active_users }} <br/>
+	Active iOS users in time range: {{ .active_ios_users }} <br/>
+	Active Android users in time range: {{ .active_android_users }} <br/>
+	android/total: {{ .active_android_users_active_users }}<br/>
+	ios/total: {{ .active_ios_users_active_users }} <br/>
+
+
+	</body>
+</html>

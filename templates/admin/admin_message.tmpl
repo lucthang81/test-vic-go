@@ -1,0 +1,32 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		<script>
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/message/send" method="POST" class="pure-form" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="id">Id (blank or 0 to send all)</label>
+						<input id="id" name="id" class="form-control" value="{{.id}}"/>
+					</div>
+					<div class="form-group">
+						<label for="title">Title</label>
+						<input id="title" name="title" class="form-control" />
+					</div>
+
+					<div class="form-group">
+						<label for="help">Content:</label>
+						<textarea id="help" name="content" class="form-control" rows="20"></textarea>
+					</div>
+
+					
+					<input type="submit" value="submit" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

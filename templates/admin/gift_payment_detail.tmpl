@@ -1,0 +1,39 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+
+
+
+
+	<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Player's username</th>
+				<th>Code</th>
+				<th>VipPoint before</th>
+				<th>VipPoint after</th>
+				<th>Status</th>
+				<th>Created at</th>
+			</tr>
+			<tr>
+				<td>{{.id}}</td>
+				<td>{{.username}}</td>
+				<td>{{.card_code}}</td>
+				<td>${{.vip_point_before}}</td>
+				<td>${{.vip_point_after}}</td>
+				<td>{{.status}}</td>
+				<td>{{.created_at}}</td>
+			</tr>
+		</table>
+
+
+
+
+</nav>
+	</body>
+</html>

@@ -1,0 +1,30 @@
+<html>
+	<head>
+		
+		{{template "header_link_script" .}}
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+
+		{{.currency_form}}
+
+		<hr>
+
+		{{.form}}
+
+		<a href="/admin/game/{{ .game_code }}/help/edit?currency_type={{.currency_type}}" class="btn btn-primary">Edit game help</a>
+		<a href="/admin/game/{{ .game_code }}/advance_record?currency_type={{.currency_type}}" class="btn btn-primary">Advance record</a>
+	<h2>Jackpot</h2>
+			{{.jackpots}}
+
+	<h2>Jackpot Tier</h2>
+			{{.jackpot_tiers}}
+	<a href="/admin/game/{{ .game_code }}/jackpot_tier/create?currency_type={{.currency_type}}" class="btn btn-primary">Create Jackpot Tier</a>
+
+	<h2>Đặt Cược</h2>
+			{{.bet_types}}
+
+		
+	</body>
+</html>

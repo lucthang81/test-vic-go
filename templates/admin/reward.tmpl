@@ -1,0 +1,13 @@
+<html>
+  <head>
+  </head>
+  <body style="margin: 20px;">
+    <h2> Game </h2>
+    {{range .}}
+    <div>
+      <a href="/admin/reward/{{.GameCode}}">{{.GameCode}}</a>
+    </div>
+    {{ end }}
+
+  </body>
+</html>

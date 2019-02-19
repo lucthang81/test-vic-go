@@ -1,0 +1,144 @@
+<html>
+  <head>
+    {{template "header_link_script" .}}
+    <script>
+			$(document).ready(function(){
+				$('input[class="image_name"]:radio').change(
+				    function(){
+				    	$('#image_name_display').attr('src',"/images/" +this.value)
+
+				    }
+				); 
+			});
+		</script>
+  </head>
+  <body style="margin: 20px;">
+    {{template "nav" .}}
+    
+    <div class="row">
+      <div class="col-md-4">
+        <form action="/admin/game/{{ .game_code }}/add_bet_data" method="POST">
+			<input type="hidden" name="game_code" value="{{ .game_code }}">
+          	<div class="form-group">
+            	<label for="cheat_code">Cheat code</label>
+            	<input type="text" id="cheat_code" name="bet_data_cheat_code" class="form-control" placeholder="Cheat code" aria-describedby="basic-addon1">
+          	</div>
+          	<div class="form-group">
+            	<label for="enable_bot">Enable bot</label>
+				<label class="radio-inline" id="enable_bot">
+					<input type="radio" name="enable_bot" id="inlineRadio1" value="true" > Enable
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="enable_bot" id="inlineRadio2" value="false" > Disable
+				</label>
+          	</div>
+          	<div class="form-group">
+            	<label for="min_bet">Min Bet</label>
+            	<input type="text" id="min_bet" name="bet_data_min_bet" class="form-control" placeholder="Min bet" aria-describedby="basic-addon1">
+          	</div>
+          	<div class="form-group">
+            	<label for="max_bet">Max Bet</label>
+            	<input type="text" id="max_bet" name="bet_data_max_bet" class="form-control" placeholder="Max bet" aria-describedby="basic-addon1">
+          	</div>
+          	<div class="form-group">
+            	<label for="step">Step</label>
+            	<input type="text" id="step" name="bet_data_step" class="form-control" placeholder="Step" aria-describedby="basic-addon1">
+          	</div>
+          	<div class="form-group">
+            	<label for="owner_threshold">Owner Threshold</label>
+            	<input type="text" id="owner_threshold" name="bet_data_owner_threshold" class="form-control" placeholder="Owner threshold" aria-describedby="basic-addon1">
+          	</div>
+          	<div class="form-group">
+            	<label for="chip_values">Chip values</label>
+            	<input type="text" id="chip_values" name="bet_data_chip_values" class="form-control" placeholder="Chip Values" aria-describedby="basic-addon1">
+          	</div>
+
+
+
+          	<div class="row">
+				<div class="form-group col-md-6" >
+					<label for="image_name">Image name</label>
+					<div class="radio">
+						<label>
+							<input type="radio" class="image_name" name="bet_data_image_name" id="optionsRadios1" value="macau.png">
+							macau.png
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" class="image_name" name="bet_data_image_name" id="optionsRadios1" value="atlantic.png">
+							atlantic.png
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" class="image_name" name="bet_data_image_name" id="optionsRadios1" value="sydney.png">
+							sydney.png
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" class="image_name" name="bet_data_image_name" id="optionsRadios1" value="vegas.png">
+							vegas.png
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" class="image_name" name="bet_data_image_name" id="optionsRadios1" value="paris.png">
+							paris.png
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" class="image_name" name="bet_data_image_name" id="optionsRadios1" value="monaco.png" >
+							monaco.png
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" class="image_name" name="bet_data_image_name" id="optionsRadios1" value="dubai.png">
+							dubai.png
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" class="image_name" name="bet_data_image_name" id="optionsRadios1" value="singapore.png">
+							singapore.png
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" class="image_name" name="bet_data_image_name" id="optionsRadios1" value="london.png">
+							london.png
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" class="image_name" name="bet_data_image_name" id="optionsRadios1" value="phuquoc.png">
+							phuquoc.png
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" class="image_name" name="bet_data_image_name" id="optionsRadios1" value="tokyo.png">
+							tokyo.png
+						</label>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<img id="image_name_display" src="" width="285px" height="384px"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="image_url">Image file input</label>
+				<input type="file" name="image_url" id="image_url">
+				<p class="help-block">Image file will override image name</p>
+			</div>
+          <div class="form-group">
+            <input type="submit" value="submit" class="btn btn-info"/>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		<script>
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/fake_iap" method="POST" class="pure-form" enctype="multipart/form-data">
+					
+					<div class="form-group">
+						<label for="fake_iap">Fake IAP (for ios):</label> <br/>
+						<label class="radio-inline" id="status">
+							<input type="radio" name="fake_iap" id="inlineRadio1" value="true" {{if eq .fake_iap true}} checked="checked" {{ end }}> On
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="fake_iap" id="inlineRadio2" value="false" {{if eq .fake_iap false}} checked="checked" {{ end }}> Off
+						</label>
+					</div>
+			          <div class="form-group">
+			            <label for="fake_iap_version">iOS version</label>
+			            <input type="text" id="fake_iap_version" name="fake_iap_version" class="form-control" placeholder="IOS Version" value="{{.fake_iap_version}}" aria-describedby="basic-addon1">
+			          </div>
+
+					<hr>
+					<div class="form-group">
+						<label for="fake_iab">Fake IAB (for Android):</label> <br/>
+						<label class="radio-inline" id="status">
+							<input type="radio" name="fake_iab" id="inlineRadio1" value="true" {{if eq .fake_iab true}} checked="checked" {{ end }}> On
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="fake_iab" id="inlineRadio2" value="false" {{if eq .fake_iab false}} checked="checked" {{ end }}> Off
+						</label>
+					</div>
+			          <div class="form-group">
+			            <label for="fake_iab_version">Android version</label>
+			            <input type="text" id="fake_iab_version" name="fake_iab_version" class="form-control" placeholder="Android Version" value="{{.fake_iab_version}}" aria-describedby="basic-addon1">
+			          </div>
+					
+					<input type="submit" value="submit" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

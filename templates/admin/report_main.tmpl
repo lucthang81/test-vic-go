@@ -1,0 +1,50 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+
+	</head>
+	<body style="margin: 20px;">
+		{{ template "nav" .}}
+
+		<h3> Daily </h3>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="list-group">
+				<a href="/admin/report/daily" class="list-group-item">Daily</a>
+				</div>
+			</div>
+		</div>
+
+		<h3> Report </h3>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="list-group">
+				<a href="/admin/report/active" class="list-group-item">Active(cohort/dau/nru)</a>
+				<a href="/admin/report/online" class="list-group-item">Online</a>
+				<a href="/admin/report/payment" class="list-group-item">Payment</a>
+				<a href="/admin/report/payment_graph" class="list-group-item">Payment Graph</a>
+				<a href="/admin/report/purchase" class="list-group-item">Purchase</a>
+				<a href="/admin/report/top_purchase" class="list-group-item">Top Purchase</a>
+				<a href="/admin/report/purchase_graph" class="list-group-item">Purchase Graph</a>
+				<a href="/admin/report/current_money_range" class="list-group-item">Player base on money range</a>
+				<a href="/admin/report/money" class="list-group-item">Money Report (time range)</a>
+				<a href="/admin/report/user" class="list-group-item">User</a>
+				<a href="/admin/report/total_money" class="list-group-item">Lifetime Money Report</a>
+				</div>
+			</div>
+		</div>
+
+		<h3> Old Report </h3>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="list-group">
+				<a href="/admin/report/bot" class="list-group-item">Bot data</a>
+				<a href="/admin/report/money_in_game" class="list-group-item">Money in game</a>
+				<a href="/admin/report/total_money" class="list-group-item">Total money in system</a>
+				<a href="/admin/report/bot_in_game" class="list-group-item">Bot in game</a>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>

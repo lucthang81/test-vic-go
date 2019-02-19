@@ -1,0 +1,115 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				var numPages = {{ .num_pages }}
+				var page = {{ .page }}
+				var paginationUl = $(".pagination")
+				var prevPage = page - 1
+				var prevAddress = "/admin/otp/code?keyword={{.keyword}}&page="+prevPage
+				var preLi = $( "<li>"+
+						      "<a href=\""+prevAddress+"\" aria-label=\"Previous\">"+
+						        "<span aria-hidden=\"true\">&laquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == 1) {
+					preLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(preLi)
+				}
+
+
+				var skip = false
+				if (numPages > 10) {
+					skip = true
+				}
+				var nextLiWillBeSkipLi = false
+				for (i = 1; i <= numPages; i++) {
+					if (i <= 3 || i >= numPages - 2 || (i >= page - 2 && i <= page + 2)) {
+						var address = "/admin/otp/code?keyword={{.keyword}}&page="+i
+
+						var elementLi = $("<li><a href=\""+address+"\">"+i+"</a></li>")
+						if (i == page) {
+							elementLi.addClass("disabled")
+						}
+						paginationUl.append(elementLi)
+					}else if (i == page - 3 || i == page + 3) {
+						var skipLi = $( "<li class=\"disabled\">"+
+						      "<a href=\"#\" aria-label=\"Skip\">"+
+						        "<span aria-hidden=\"true\">...</span>"+
+						      "</a>"+
+						    "</li>")
+						paginationUl.append(skipLi)
+					}
+				}
+
+				var nextPage = page + 1
+				var nextAddress = "/admin/otp/code?keyword={{.keyword}}&page="+nextPage
+				var nextLi = $("<li>"+
+						      "<a href=\""+nextPage+"\" aria-label=\"Next\">"+
+						        "<span aria-hidden=\"true\">&raquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == numPages) {
+					nextLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(nextLi)
+				}
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/otp/code" method="GET" class="pure-form" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="keyword">Search(id/username/phone number):</label>
+						<input type="text" name="keyword" class="form-control" placeholder="Keyword" value="{{.keyword}}" />
+					</div>
+					<input type="submit" value="Refresh" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+	
+	<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Player Id</th>
+				<th>Username</th>
+				<th>Phone number</th>
+				<th>Reason</th>
+				<th>Status</th>
+				<th>OTP Code</th>
+				<th>Retry Count</th>
+				<th>Created at</th>
+				<th>Expired at</th>
+				<th>Action</th>
+			</tr>
+			{{range .results}}
+			<tr>
+				<td>{{.id}}</td>
+				<td><a href="/admin/player/{{.player_id}}/history">{{.player_id}}</a></td>
+				<td>{{.username}}</td>
+				<td>{{.phone_number}}</td>
+				<td>{{.reason}}</td>
+				<td>{{.status}}</td>
+				<td>{{.otp_code}}</td>
+				<td>{{.retry_count}}</td>
+				<td>{{.created_at}}</td>
+				<td>{{.expired_at}}</td>
+				<td><a class="btn btn-primary" href="/admin/otp/code/edit?id={{.id}}">Edit</a></td>
+			</tr>
+			{{ end }}
+		</table>		
+<nav>
+  <ul class="pagination">
+  </ul>
+</nav>
+	</body>
+</html>

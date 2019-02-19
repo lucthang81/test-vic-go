@@ -1,0 +1,17 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		{{.script}}
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		Id: {{.id}} <br/>
+		PlayerId: <a href="/admin/player/{{.player_id}}/history">{{.player_id}}</a> <br/>
+		Username: {{.username}} <br/>
+		Reason: {{.reason}} <br/>
+		Otp Code: {{.otp_code}} <br/>
+		Created at: {{.created_at}} <br/>
+		<hr>
+		{{.form}}
+	</body>
+</html>

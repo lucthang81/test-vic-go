@@ -1,0 +1,180 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+
+				var numPages = {{ .num_pages }}
+				var page = {{ .page }}
+				var paginationUl = $(".pagination")
+				var prevPage = page - 1
+				var prevAddress = "/admin/match?start_date={{ .start_date }}&start_time={{ .start_time }}"+
+				"&end_date={{ .end_date }}&end_time={{ .end_time }}&game_code={{.game_code}}&players_num={{.players_num}}&page="+prevPage
+				var preLi = $( "<li>"+
+						      "<a href=\""+prevAddress+"\" aria-label=\"Previous\">"+
+						        "<span aria-hidden=\"true\">&laquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == 1) {
+					preLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(preLi)
+				}
+
+
+				var skip = false
+				if (numPages > 10) {
+					skip = true
+				}
+				var nextLiWillBeSkipLi = false
+				for (i = 1; i <= numPages; i++) {
+					if (i <= 3 || i >= numPages - 2 || (i >= page - 2 && i <= page + 2)) {
+						var address = "/admin/match?start_date={{ .start_date }}&start_time={{ .start_time }}"+
+						"&end_date={{ .end_date }}&end_time={{ .end_time }}&game_code={{.game_code}}&players_num={{.players_num}}&page="+i
+
+						var elementLi = $("<li><a href=\""+address+"\">"+i+"</a></li>")
+						if (i == page) {
+							elementLi.addClass("disabled")
+						}
+						paginationUl.append(elementLi)
+					}else if (i == page - 3 || i == page + 3) {
+						var skipLi = $( "<li class=\"disabled\">"+
+						      "<a href=\"#\" aria-label=\"Skip\">"+
+						        "<span aria-hidden=\"true\">...</span>"+
+						      "</a>"+
+						    "</li>")
+						paginationUl.append(skipLi)
+					}
+				}
+
+				var nextPage = page + 1
+				var nextAddress = "/admin/match?start_date={{ .start_date }}&start_time={{ .start_time }}"+
+				"&end_date={{ .end_date }}&end_time={{ .end_time }}&game_code={{.game_code}}&players_num={{.players_num}}&page="+nextPage
+				var nextLi = $("<li>"+
+						      "<a href=\""+nextPage+"\" aria-label=\"Next\">"+
+						        "<span aria-hidden=\"true\">&raquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == numPages) {
+					nextLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(nextLi)
+				}
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/match" method="GET" class="pure-form" enctype="multipart/form-data">
+					<div class="form-group" >
+						<label for="game_code">Game</label>
+						{{ range .games}}
+						<div class="radio">
+							<label class="radio-inline">
+								<input type="radio" name="game_code" id="game_code" value="{{.}}"  {{if eq $.game_code .}} checked="checked" {{ end }}>
+								{{ . }}
+							</label>
+						</div>
+						{{ end }}
+
+						<div class="radio">
+							<label class="radio-inline">
+								<input type="radio" name="game_code" id="game_code" value=""  {{if eq .game_code ""}} checked="checked" {{ end }}>
+								All
+							</label>
+						</div>
+					</div>
+					<div class="form-group" >
+						<label for="players_num">Number of players</label>
+						<input type="text" name="players_num" value="{{.players_num}}" class="form-control" placeholder="Number of players" />
+					</div>
+					{{.currency_input}}
+					<div class="form-group">
+						<label for="start_date">Start date (Vietnamese time)</label>
+						<input type="text" id="start_date" name="start_date" class="form-control" placeholder="Start date" value="{{.start_date}}" />
+					</div>
+					<div class="form-group">
+						<label for="end_date">End date (Vietnamese time)</label>
+						<input type="text" id="end_date" name="end_date" class="form-control" placeholder="End date" value="{{.end_date}}" />
+					</div>
+					<input type="submit" value="Refresh" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+
+
+
+
+
+
+	<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Players</th>
+				<th>IpAddress</th>
+				<th>Game code</th>
+				<th>Requirement</th>
+				<th colspan="3">MoreInfo</th>
+				<th>Win</th>
+				<th>Lose</th>
+				<th>Bot Win</th>
+				<th>Bot Lose</th>
+				<th>Bet</th>
+				<th>Tax</th>
+				<th>Created At</th>
+			</tr>
+			{{range .results}}
+			<tr>
+				<td>
+					<a href="/admin/match/{{.id}}">{{.id}}</a></td>
+				<td>
+					{{range .player_ids}}
+					<a {{if eq .player_type "normal"}} class="text-danger" {{end}} href="/admin/player/{{.id}}/history">{{.id}}</a>
+					{{ end }}
+				</td>
+				<td>
+					{{range .player_ips}}
+					{{if eq .player_type "normal"}}
+					<a class="text-danger" href="/admin/player/{{.id}}/history">{{.id}}:{{.ip_address}}</a>,
+					{{end}}
+					{{ end }}
+				</td>
+				<td>{{.game_code}}</td>
+				<td>{{.requirement}}</td>
+				<td>{{.more_info}}</td>
+				<td>Người thường: {{.normal_count}}</td>
+				<td>Bot: {{.bot_count}}</td>
+				<td>{{.win}}</td>
+				<td>{{.lose}}</td>
+				<td>${{.bot_win}}</td>
+				<td>${{.bot_lose}}</td>
+				<td>{{.bet}}</td>
+				<td>{{.tax}}</td>
+				<td>{{.created_at}}</td>
+			</tr>
+			{{end}}
+		</table>
+
+
+
+		
+<nav>
+  <ul class="pagination">
+  </ul>
+</nav>
+	</body>
+</html>

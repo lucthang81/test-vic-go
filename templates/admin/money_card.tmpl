@@ -1,0 +1,121 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				var numPages = {{ .num_pages }}
+				var page = {{ .page }}
+				var paginationUl = $(".pagination")
+				var prevPage = page - 1
+				var prevAddress = "/admin/money/card?page="+prevPage
+				var preLi = $( "<li>"+
+								"<a href=\""+prevAddress+"\" aria-label=\"Previous\">"+
+										"<span aria-hidden=\"true\">&laquo;</span>"+
+								"</a>"+
+						"</li>")
+				if (page == 1) {
+					preLi.addClass("disabled")
+				}
+				if (numPages > 0) {
+					paginationUl.append(preLi)
+				}
+				var skip = false
+				if (numPages > 10) {
+					skip = true
+				}
+				var nextLiWillBeSkipLi = false
+				for (i = 1; i <= numPages; i++) {
+					if (i <= 3 || i >= numPages - 2 || (i >= page - 2 && i <= page + 2)) {
+						var address = "/admin/money/card?page="+i
+						var elementLi = $("<li><a href=\""+address+"\">"+i+"</a></li>")
+						if (i == page) {
+							elementLi.addClass("disabled")
+						}
+						paginationUl.append(elementLi)
+					}else if (i == page - 3 || i == page + 3) {
+						var skipLi = $( "<li class=\"disabled\">"+
+								"<a href=\"#\" aria-label=\"Skip\">"+
+										"<span aria-hidden=\"true\">...</span>"+
+								"</a>"+
+						"</li>")
+						paginationUl.append(skipLi)
+					}
+				}
+				var nextPage = page + 1
+				var nextAddress = "/admin/money/card?page="+nextPage
+				var nextLi = $("<li>"+
+								"<a href=\""+nextAddress+"\" aria-label=\"Next\">"+
+										"<span aria-hidden=\"true\">&raquo;</span>"+
+								"</a>"+
+						"</li>")
+				if (page == numPages) {
+					nextLi.addClass("disabled")
+				}
+				if (numPages > 0) {
+					paginationUl.append(nextLi)
+				}
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		<form action="/admin/money/card" method="GET" class="form-inline">
+			<div class="form-group">
+				<label for="telco">Telco</label>
+				<select name="card_type" id="telco" class="form-control">
+					<option {{if eq .card_type ""}} selected {{ end }} value="">All</option>
+					<option {{if eq .card_type "mobi"}} selected {{ end }} value="mobi">Mobiphone</option>
+					<option {{if eq .card_type "viettel"}} selected {{ end }} value="viettel">Viettel</option>
+					<option {{if eq .card_type "vina"}} selected {{ end }} value="vina">Vinaphone</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="status">Status</label>
+				<select name="status" id="status" class="form-control">
+					<option {{if eq .card_type ""}} selected {{ end }} value="">All</option>
+					<option {{if eq .card_type "unclaimed"}} selected {{ end }} value="unclaimed">Unclaimed</option>
+					<option {{if eq .card_type "claimed"}} selected {{ end }} value="claimed">Claimed</option>
+				</select>
+			</div>
+			<button type="submit" class="btn btn-default">Refresh</button>
+		</form>
+		<hr>
+		<a class="btn btn-primary" href="/admin/money/card/create">Create</a>
+		<a class="btn btn-primary" href="/admin/money/card/import">Import</a>
+		<hr>
+		<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Telco</th>
+				<th>Type</th>
+				<th>Serial</th>
+				<th>Card Code</th>
+				<th>Created at</th>
+				<th>Status</th>
+			</tr>
+			{{range .cards}}
+			<tr>
+				<td>{{.id}}</td>
+				<td>{{.card_type}}</td>
+				<td>{{.card_code}}</td>
+				<td>{{.serial_code}}</td>
+				<td>{{.card_number}}</td>
+				<td>{{.created_at}}</td>
+				<td>{{.status}}</td>
+			</tr>
+			{{ end }}
+		</table>
+		
+		<nav>
+			<ul class="pagination">
+			</ul>
+		</nav>
+	</body>
+</html>

@@ -1,0 +1,66 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="/jquery-ui-1.11.4/jquery-ui.min.css">
+		<link rel="stylesheet" href="/css/style.css">
+		<script src="/jquery-ui-1.11.4/external/jquery/jquery.js"></script>
+		<script src="/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+		<link href="/bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet">
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+
+				$('input[name="event_type"]:radio').change(
+				    function(){
+				    	if (this.value == "one_time") {
+				    		$('#time_range_form').hide()
+				    		$('#one_time_form').show()
+				    	}else if (this.value == "time_range") {
+				    		$('#time_range_form').show()
+				    		$('#one_time_form').hide()
+
+				    	}
+				    }
+				); 
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		<h2>Edit event</h2>
+		<form action="/admin/event/edit" method="POST" class="pure-form" enctype="multipart/form-data">
+			<input type="hidden" name="id" value="{{ .id }}"></br>
+			<input type="text" name="priority" placeholder="priority" value="{{ .priority }}"/></br>
+			<input type="text" name="multiplier" placeholder="multiplier" value="{{ .data.multiplier }}" /></br>
+			<input type="text" name="bonus" placeholder="bonus" value="{{ .data.bonus }}" /></br>
+			<input type="text" name="title" placeholder="title" value="{{ .title }}" /></br>
+			<input type="text" name="description" placeholder="description" value="{{ .description }}" /></br>
+			<input type="text" name="tip_title" placeholder="tip title" value="{{ .tip_title }}"  /></br>
+			<input type="text" name="tip_description" placeholder="tip description" value="{{ .tip_description }}" /></br>
+			
+			<img src="{{.icon_url}}" width="230px" height="230px"/>
+			<input type="hidden" name="old_icon_url" id="icon_url" value="{{ .icon_url }}"></br>
+    		<input type="file" name="icon_url" id="icon_url" ></br>
+			
+			<INPUT TYPE="radio" NAME="event_type" VALUE="one_time" {{if eq .event_type "one_time"}} checked="checked" {{ end }} >One Time
+			<INPUT TYPE="radio" NAME="event_type" VALUE="time_range" {{if eq .event_type "time_range"}} checked="checked" {{ end }} >Time Range
+			</br>
+			<div id="one_time_form" {{if not (eq .event_type "one_time")}} style="display:none" {{ end }} ></div>
+
+			<div id="time_range_form" {{if not (eq .event_type "time_range")}} style="display:none" {{ end }} >
+				Start date (Vietnamese time) <input type="text" name="start_date" id="start_date" value="{{ .start_date_date_only }}"/> 
+				Time (23:59:59): <input type="text" name="start_time" id="start_time"  value="{{ .start_date_time_only }}"/></br>
+			End date (Vietnamese time) <input type="text" name="end_date" id="end_date"  value="{{ .end_date_date_only }}"/> 
+			Time (23:59:59): <input type="text" name="end_time" id="end_time"  value="{{ .end_date_time_only }}"/></br>
+			</div>
+
+
+
+			<input type="submit" value="submit" class="pure-button pure-button-primary"/>
+		</form>
+	</body>
+</html>

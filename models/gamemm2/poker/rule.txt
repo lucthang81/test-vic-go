@@ -1,0 +1,40 @@
+Forced bet:
+    Dealer button rotates clockwise after each hand.
+    The small blind, is usually equal to half of the big blind.
+        if nPlayer >= 3: SmallBlind is the player to the left of the dealer
+        if nPlayer == 2: SmallBlind is the dealer
+    The big blind, is equal to the minimum bet. 
+        BigBlind is the player to the left of the SmallBlind
+    Antes (forced contributions by all players) may be used in addition to blinds.
+
+Betting
+    Betting turn
+        Preflop:
+            Player to the left of the BigBlind acts first
+        Other rounds
+            Player to the left of the Dealer acts first
+            
+    Actions when it is player's  turn:
+        Check
+            To check is to decline the opportunity to open the betting.
+            Players can only check when there is no bet during the current round 
+        Bet
+            Players may bet if no other players have bet during the current round.
+            Minimum bet is equal to the big blind.
+            Once a bet has been made, other players must Fold, Call or Raise 
+        Fold
+            Players who fold forfeit their cards and cannot win or act again
+        Call
+            _
+        Raise
+            Minimum raise is equal to the previous bet or raise
+                
+            
+    Side pots
+        you can only win a pot that you are in
+        you cannot win anything if you fold before the showdown
+        the player in each pot with the best hand wins that pot
+        if a pot is tied that pot is split between the tied players
+
+
+                

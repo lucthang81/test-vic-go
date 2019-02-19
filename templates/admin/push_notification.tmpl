@@ -1,0 +1,55 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		<script>
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+		<div class="row">
+			<div class="col-md-4">
+				<div class="list-group">
+					{{range .results}}
+				<a href="/admin/push_notification/{{.app_type}}/update" class="list-group-item">{{.app_type}}</a>
+				{{end}}
+				</div>
+			</div>
+		</div>
+		<a class="btn btn-primary" href="/admin/push_notification/schedule">Schedule push to all users</a>
+
+		<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/push_notification/create" method="POST" class="pure-form" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="app_type">App type</label>
+						<input id="app_type" name="app_type" class="form-control" placeholder="App type" />
+					</div>
+					<div class="form-group">
+						<label for="apns_key_file_content">APNS Key file content:</label>
+						<textarea id="apns_key_file_content" name="apns_key_file_content" class="form-control" rows="20"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="apns_cer_file_content">APNS Cer file content:</label>
+						<textarea id="apns_cer_file_content" name="apns_cer_file_content" class="form-control" rows="20"></textarea>
+					</div>
+					<div class="form-group">
+						<label for="apns_type">APNS Type:</label> <br/>
+						<label class="radio-inline" id="apns_type">
+							<input type="radio" name="apns_type" id="inlineRadio1" value="sandbox"> Sandbox
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="apns_type" id="inlineRadio2" value="production"> Production
+						</label>
+					</div>
+					<div class="form-group">
+						<label for="gcm_api_key">GCM API key:</label>
+						<textarea id="gcm_api_key" name="gcm_api_key" class="form-control" rows="3"></textarea>
+					</div>
+					
+					<input type="submit" value="submit" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,65 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{ template "nav" . }}
+		<div class="row">
+			<div class="col-md-4">
+				<table class="table">
+					<tr>
+						<th>ID</th>
+						<th>Type</th>
+						<th>Code</th>
+						<th>Money</th>
+						<th colspan="2"></th>
+					</tr>
+					{{range .purchase_types}}
+					<tr>
+						<td>{{.id}}</td>
+						<td>{{.purchase_type}}</td>
+						<td>{{.purchase_code}}</td>
+						<td>${{.money_format}}</td>
+						<td><a class="btn btn-primary" href="/admin/money/purchase_type/{{.id}}/edit">Edit</a></td>
+						<td><a class="btn btn-danger" href="/admin/money/purchase_type/{{.id}}/delete">Delete</a></td>
+					</tr>
+					{{ end }}
+				</table>
+			</div>
+		</div>
+		<h3>Create purchase type</h3>
+		<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/money/purchase_type/create" method="POST">
+					<div class="form-group">
+						<label for="purchase_type">Type</label>
+						<select name="purchase_type" id="purchase_type" class="form-control">
+							<option value="appvn">appvn</option>
+							<option value="paybnb">paybnb</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="code">Code</label>
+						<input type="text" name="code" class="form-control" id="code" placeholder="Code">
+					</div>
+					<div class="form-group">
+						<label for="money">Money in game</label>
+						<input type="text" name="money" class="form-control" id="money" placeholder="Money (in game)">
+					</div>
+					<button type="submit" class="btn btn-default">Create</button>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

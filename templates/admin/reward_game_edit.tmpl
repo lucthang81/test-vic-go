@@ -1,0 +1,25 @@
+<html>
+	<head>
+	</head>
+	<body style="margin: 20px;">
+		{{$gameCode := .game_code}}
+
+
+		<h2>Edit reward "{{.from_rank}} - {{.to_rank}}"</h2>
+		<form action="/admin/reward/edit_reward" method="POST" class="pure-form" enctype="multipart/form-data">
+			<input type="text" name="from_rank" placeholder="from rank" value="{{.from_rank}}"/></br>
+			<input type="text" name="to_rank" placeholder="to rank"  value="{{.to_rank}}"/></br>
+			<input type="text" name="prize" placeholder="prize" value="{{.prize}}" /></br>
+
+			<img src="{{.image_url}}" width="230px" height="230px"/></br>
+    		<input type="hidden" name="old_image_url" value="{{.image_url}}"/>
+    		<input type="file" name="image_url" id="image_url"></br>
+
+    		<input type="hidden" name="id" value="{{.id}}"/>
+    		<input type="hidden" name="reward_type" value="{{.reward_type}}"/>
+			
+			<input type="hidden" name="game_code" value="{{.game_code}}" /></br>
+			<input type="submit" value="submit" class="pure-button pure-button-primary"/>
+		</form>
+	</body>
+</html>

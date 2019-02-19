@@ -1,0 +1,342 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+Game: {{.game_code}} <br/>
+Requirement: {{.requirement}} <br/>
+
+	<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Players</th>
+				<th>IpAddress</th>
+				<th>Win</th>
+				<th>Lose</th>
+				<th>Bot Win</th>
+				<th>Bot Lose</th>
+				<th>Bet</th>
+				<th>Tax</th>
+				<th>Created At</th>
+			</tr>
+			<tr>
+				<td>{{.id}}</td>
+				<td>
+					{{range .player_ids}}
+					<a {{if eq .player_type "normal"}} class="text-danger" {{end}} href="/admin/player/{{.id}}/history">{{.id}}</a>
+					{{ end }}
+				</td>
+				<td>
+					{{range .player_ips}}
+					{{if eq .player_type "normal"}}
+					<a class="text-danger" href="/admin/player/{{.id}}/history">{{.id}}:{{.ip_address}}</a>,
+					{{end}}
+					{{ end }}
+				</td>
+				<td>{{.win}}</td>
+				<td>{{.lose}}</td>
+				<td>${{.bot_win}}</td>
+				<td>${{.bot_lose}}</td>
+				<td>{{.bet}}</td>
+				<td>{{.tax}}</td>
+				<td>{{.created_at}}</td>
+			</tr>
+		</table>
+<br/>
+<br/>
+<br/>
+
+<h3>More data</h3>
+Normal player: {{.normal_count}}<br/>
+Bot: {{.bot_count}}<br/>
+Bot lose money: {{if eq .bot_lose "0"}} no {{else}} yes {{end}} <br/>
+Player win money: {{if eq .win "0"}} no {{else}} yes {{end}} <br/>
+<hr>
+
+
+{{if eq .game_code "xidach"}}
+<table class="table">
+			<tr>
+				<th>Player id</th>
+				<th>Bet</th>
+			</tr>
+				{{range $key, $value := .match_data.bets}}
+			<tr>
+				<td><a href="/admin/player/{{$key}}/history">{{$key}}</a></td>
+				<td>{{$value}}</td>
+			</tr>
+				{{end}}
+		</table>
+		Result<br/>
+<table class="table">
+	<tr>
+		<th>Player id</th>
+		<th>Result</th>
+		<th>Change</th>
+	</tr>
+{{range .match_data.results}}
+	<tr>
+		<td><a href="/admin/player/{{.id}}/history">{{.id}}</a></td>
+		<td>{{.result}}</td>
+		<td>{{.change}}</td>
+		
+	</tr>
+	{{end}}
+</table>
+{{end}}
+
+{{if eq .game_code "baicao"}}
+<table class="table">
+			<tr>
+				<th>Player id</th>
+				<th>Bet</th>
+			</tr>
+				{{range $key, $value := .match_data.moneys_on_table}}
+			<tr>
+				<td><a href="/admin/player/{{$key}}/history">{{$key}}</a></td>
+				<td>{{$value}}</td>
+			</tr>
+				{{end}}
+		</table>
+		Result<br/>
+<table class="table">
+	<tr>
+		<th>Player id</th>
+		<th>Result</th>
+		<th>Change</th>
+	</tr>
+{{range .match_data.results}}
+	<tr>
+		<td><a href="/admin/player/{{.id}}/history">{{.id}}</a></td></td>
+		<td>{{.result}}</td>
+		<td>{{.change}}</td>
+		
+	</tr>
+	{{end}}
+</table>
+{{end}}
+
+{{if eq .game_code "maubinh"}}
+<table class="table">
+			<tr>
+				<th>Player id</th>
+				<th>Bet</th>
+			</tr>
+				{{range $key, $value := .match_data.moneys_on_table}}
+			<tr>
+				<td><a href="/admin/player/{{$key}}/history">{{$key}}</a></td>
+				<td>{{$value}}</td>
+			</tr>
+				{{end}}
+		</table>
+		Result<br/>
+<table class="table">
+	<tr>
+		<th>Player id</th>
+		<th>Result</th>
+		<th>Change</th>
+	</tr>
+{{range .match_data.results}}
+	<tr>
+		<td><a href="/admin/player/{{.id}}/history">{{.id}}</a></td></td>
+		<td>{{.result}}</td>
+		<td>{{.change}}</td>
+		
+	</tr>
+	{{end}}
+</table>
+{{end}}
+
+{{if eq .game_code "tienlen"}}
+<table class="table">
+			<tr>
+				<th>Player id</th>
+				<th>Bet</th>
+			</tr>
+				{{range $key, $value := .match_data.moneys_on_table}}
+			<tr>
+				<td><a href="/admin/player/{{$key}}/history">{{$key}}</a></td>
+				<td>{{$value}}</td>
+			</tr>
+				{{end}}
+		</table>
+		Result<br/>
+<table class="table">
+	<tr>
+		<th>Player id</th>
+		<th>Result</th>
+		<th>Change</th>
+	</tr>
+{{range .match_data.results}}
+	<tr>
+		<td><a href="/admin/player/{{.id}}/history">{{.id}}</a></td></td>
+		<td>{{.result}}</td>
+		<td>{{.change}}</td>
+		
+	</tr>
+	{{end}}
+</table>
+{{end}}
+
+
+
+{{if eq .game_code "xocdia"}}
+Requirement: {{.match_data.requirement}} <br/>
+Roll: {{.match_data.roll}} <br/>
+Owner: {{.match_data.owner_id}} <br/>
+
+{{range $player_id, $value := .match_data.bet_data.bet_data}}
+PlayerId: <a href="/admin/player/{{$player_id}}/history">{{$player_id}}</a><br/>
+<table class="table">
+	<tr>
+		<th>BetCode</th>
+		<th>Value</th>
+	</tr>
+	{{range $betCode, $chipValue := $value}}
+	<tr>
+		<td>{{$betCode}}</td>
+		<td>{{$chipValue}}</td>
+		
+	</tr>
+	{{end}}
+</table>
+{{end}}
+
+<h3>Sell/Buy</h3>
+{{range $player_id, $value := .match_data.bet_data.buy_data}}
+PlayerId: <a href="/admin/player/{{$player_id}}/history">{{$player_id}}</a><br/>
+<table class="table">
+	<tr>
+		<th>BetCode</th>
+		<th>Value</th>
+	</tr>
+	{{range $betCode, $chipValue := $value}}
+	<tr>
+		<td>{{$betCode}}</td>
+		<td>{{$chipValue}}</td>
+		
+	</tr>
+	{{end}}
+</table>
+{{end}}
+
+Result<br/>
+<table class="table">
+	<tr>
+		<th>Player id</th>
+		<th>Result</th>
+		<th>Change</th>
+	</tr>
+{{range .match_data.results}}
+	<tr>
+		<td><a href="/admin/player/{{.id}}/history">{{.id}}</a></td></td>
+		<td>{{.result}}</td>
+		<td>{{.change}}</td>
+		
+	</tr>
+	{{end}}
+</table>
+{{end}}
+
+{{if eq .game_code "roulette"}}
+Requirement: {{.match_data.requirement}} <br/>
+Roll: {{.match_data.roll}} <br/>
+Owner: {{.match_data.owner_id}} <br/>
+
+{{range $player_id, $value := .match_data.chip_data}}
+PlayerId: <a href="/admin/player/{{$player_id}}/history">{{$player_id}}</a><br/>
+<table class="table">
+	<tr>
+		<th>Bet</th>
+		<th>Place</th>
+	</tr>
+	{{range $chipValue, $position := $value}}
+	<tr>
+		<td>{{$chipValue}}</td>
+		<td>{{$position}}</td>
+		
+	</tr>
+	{{end}}
+</table>
+{{end}}
+
+Result<br/>
+<table class="table">
+	<tr>
+		<th>Player id</th>
+		<th>Result</th>
+		<th>Change</th>
+	</tr>
+{{range .match_data.results}}
+	<tr>
+		<td><a href="/admin/player/{{.id}}/history">{{.id}}</a></td></td>
+		<td>{{.result}}</td>
+		<td>{{.change}}</td>
+		
+	</tr>
+	{{end}}
+</table>
+{{end}}
+
+
+
+{{if eq .game_code "sicbo"}}
+
+{{range .match_data.results}}
+Roll: {{.group}}<br/>
+Jackpot:<br/>
+<table class="table">
+	<tr>
+		<th>Roll</th>
+		<th>JackpotCode</th>
+	</tr>
+{{range $roll,$jackpotCode := .jackpot}}
+	<tr>
+		<td>{{$roll}}</td>
+		<td>{{$jackpotCode}}</td>
+		
+	</tr>
+	{{end}}
+</table>
+
+{{end}}
+
+<table class="table">
+	<tr>
+		<th>Bet</th>
+		<th>Place</th>
+	</tr>
+	{{range $betCode, $chipValue := .match_data.bet_data}}
+	<tr>
+		<td>{{$betCode}}</td>
+		<td>{{$chipValue}}</td>
+	</tr>
+	{{end}}
+</table>
+
+Result<br/>
+<table class="table">
+	<tr>
+		<th>Player id</th>
+		<th>Result</th>
+		<th>Change</th>
+	</tr>
+{{range .match_data.results}}
+	<tr>
+		<td><a href="/admin/player/{{.id}}/history">{{.id}}</a></td></td>
+		<td>{{.result}}</td>
+		<td>{{.change}}</td>
+		
+	</tr>
+	{{end}}
+</table>
+{{end}}
+
+
+{{.match_data}}
+
+	</body>
+</html>

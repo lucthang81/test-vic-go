@@ -1,0 +1,37 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{ template "nav" . }}
+
+		<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/money/card_type/{{.card_type.id}}/edit" method="POST">
+					<input type="hidden" name="id" value="{{.card_type.id}}">
+ 					<div class="form-group">
+						<label for="code">Card code</label>
+						<input type="text" name="code" class="form-control" id="code" placeholder="Card code" value="{{.card_type.card_code}}">
+					    <p class="help-block">Text, no space, should be [1]_[2], 1: mobi/viettel/vina, 2: vnd exclude 3 tailing zeroes (example viettel_500, vina_200)</p>
+					</div>
+					<div class="form-group">
+						<label for="money">Money in game</label>
+						<input type="text" name="money" class="form-control" id="money" placeholder="Money (in game)" value="{{.card_type.money}}">
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

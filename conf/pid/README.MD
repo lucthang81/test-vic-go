@@ -1,0 +1,1 @@
+The purpose of this directory is to host pid files produce by celery and supervisord

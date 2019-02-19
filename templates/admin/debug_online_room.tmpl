@@ -1,0 +1,17 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+	Id: {{.id}} <br/>
+	<br/>
+	<p class="text-danger">Nguy hiểm!!! Sẽ crash hệ thống nếu ấn lúc phòng không bị khoá</p>
+	<a class="btn btn-danger" href="/admin/debug_online/room/{{.id}}/unlock">Unlock room (DANGEROUS!!! WILL CRASH IF ROOM IS NOT LOCK)</a><br/>
+	Content:<br/>
+	<pre>
+	{{.content}}
+</pre>
+	</body>
+</html>

@@ -1,0 +1,330 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+	    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+			});
+
+			// Load the Visualization API and the piechart package.
+		      google.load('visualization', '1.0', {'packages':['corechart']});
+
+		      // Set a callback to run when the Google Visualization API is loaded.
+		      google.setOnLoadCallback(drawChart);
+
+		      // Callback that creates and populates a data table,
+		      // instantiates the pie chart, passes in the data and
+		      // draws it.
+		      function drawChart() {
+
+		        // Create the nru data table.
+		        var data = google.visualization.arrayToDataTable([
+		          ['Date', 'Active count'],
+				{{ range $index, $element := .nru.results }}
+				['{{$element.date}}', {{$element.count}}],
+				{{ end }}
+		        ]);
+
+
+		        // Set chart options
+		        var options = {'title':'NRU',
+		                       'width':1400,
+		                       'height':600,
+			                   legend: { position: 'bottom' }};
+
+		        // Instantiate and draw our chart, passing in some options.
+		        var chart = new google.visualization.LineChart(document.getElementById('nru_chart_div'));
+		        chart.draw(data, options);
+
+
+		        // Create the payment data table.
+		        /*
+	{{.payment_graph}}
+		        */
+		        var data = google.visualization.arrayToDataTable([
+		          ['Date', 'Payment'],
+				{{ range $index, $element := .payment_graph.results }}
+				['{{$element.date}}', {{$element.value}}],
+				{{ end }}
+		        ]);
+
+
+		        // Set chart options
+		        var options = {'title':'Payment',
+		                       'width':1400,
+		                       'height':600,
+			                   legend: { position: 'bottom' }};
+
+		        // Instantiate and draw our chart, passing in some options.
+		        var chart = new google.visualization.LineChart(document.getElementById('payment_chart_div'));
+		        chart.draw(data, options);
+
+		         // Create the purchase data table.
+		        var data = google.visualization.arrayToDataTable([
+		          ['Date', 'Purchase'],
+				{{ range $index, $element := .purchase_graph.results }}
+				['{{$element.date}}', {{$element.value}}],
+				{{ end }}
+		        ]);
+
+
+		        // Set chart options
+		        var options = {'title':'Purchase',
+		                       'width':1400,
+		                       'height':600,
+			                   legend: { position: 'bottom' }};
+
+		        // Instantiate and draw our chart, passing in some options.
+		        var chart = new google.visualization.LineChart(document.getElementById('purchase_chart_div'));
+		        chart.draw(data, options);
+		      }
+		</script>
+	</head>
+	<body style="margin: 20px;">
+
+{{template "nav" .}}
+	<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/report/daily" method="GET" class="pure-form" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="start_date">Start date (Vietnamese time)</label>
+						<input type="text" id="start_date" name="start_date" class="form-control" placeholder="Start date" value="{{.start_date}}" />
+					</div>
+					<div class="form-group">
+						<label for="start_time">Time (23:59:59):</label>
+						<input type="text" name="start_time" class="form-control" placeholder="Start time" value="{{.start_time}}" />
+					</div>
+					<div class="form-group">
+						<label for="end_date">End date (Vietnamese time)</label>
+						<input type="text" id="end_date" name="end_date" class="form-control" placeholder="End date" value="{{.end_date}}" />
+					</div>
+					<div class="form-group">
+						<label for="end_time">Time (23:59:59):</label>
+						<input type="text" name="end_time" class="form-control" placeholder="Start time" value="{{.end_time}}" />
+					</div>
+					{{.currency_input}}
+					<input type="submit" value="Refresh" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+
+
+    <h2>Money in game</h2>
+	<table class="table">
+		<tr>
+			<th>Game</th>
+			<th>Matches</th>
+			<th>UserWin</th>
+			<th>UserLose</th>
+			<th>UserNetGain</th>
+			<th>BotWin</th>
+			<th>BotLose</th>
+			<th>Tax</th>
+			<th>Bet</th>
+		</tr>
+		{{range .money_game}}
+			<tr class="{{.user_net_gain_color}}">
+				<td><a href="/admin/report/money_in_game?game_code={{.game_code}}&currency_type={{$.currency_type}}">{{.game_code}}</a></td>
+				<td>{{.total_match}}</td>
+				<td>{{.win}}</td>
+				<td>{{.lose}}</td>
+				<td>{{.user_net_gain}}</td>
+				<td>{{.bot_win}}</td>
+				<td>{{.bot_lose}}</td>
+				<td>{{.tax}}</td>
+				<td>{{.bet}}</td>
+			</tr>
+		{{end}}
+	</table>
+	<hr>
+
+
+    <h2>Bot Budget</h2>
+	<table class="table">
+		<tr>
+			<th>Game</th>
+			<th>Bot Budget</th>
+		</tr>
+		{{range .bot_budget}}
+			<tr class="{{.color}}">
+				<td><a href="/admin/game/{{.game_code}}?currency_type=money">{{.game_code}}</a></td>
+				<td>{{.bot_budget}}</td>
+			</tr>
+		{{end}}
+	</table>
+	<hr>
+
+	<h2>Sắp hết thẻ</h2>
+	<table class="table">
+			<tr>
+				<th>Telco</th>
+				<th>Value</th>
+				<th>Card code</th>
+				<!-- <th>Tổng số thẻ cào đã add vào</th>
+				<th>Tổng tiền thẻ cào đã add vào</th> -->
+				<th>Số thẻ còn lại để trả thưởng</th>
+				<th>Tổng tiền thẻ còn lại để trả thưởng</th>
+				<!-- <th>Số thẻ đã dùng để trao thưởng</th>
+				<th>Tổng tiền thẻ đã trao thưởng</th> -->
+			</tr>
+			{{range .runout_card}}
+			<tr class="danger">
+				<td>{{.telco}}</td>
+				<td>{{.real_money}}</td>
+				<td>{{.card_code}}</td>
+				<!-- <td>{{.count}}</td>
+				<td>{{.sum}}</td> -->
+				<td>{{.unclaimed_count}}</td>
+				<td>{{.unclaimed_sum}}</td>
+				<!-- <td>{{.claimed_count}}</td>
+				<td>{{.claimed_sum}}</td> -->
+			</tr>
+			{{ end }}
+		</table>
+	<hr>
+
+	<h2>Online report</h2>
+	(1) Người chơi bình thường đang online: {{.online.online_normal_count}} <br/>
+	(2) Bot đang online: {{.online.online_bot_count}} <br/>
+	(1) + (2) Tổng số online: {{.online.online_total_count}} <br/>
+	<hr>
+	<h3>Tiền thật</h3>
+	<table class="table">
+		<tr>
+			<th>Game</th>
+			<th>Số phòng online</th>
+			<th>Tổng người trong phòng</th>
+			<th>Tổng bot trong phòng</th>
+			<th>Tổng người chơi bình thường trong phòng</th>
+		</tr>
+		{{range $key,$value := .online.money}}
+		<tr>
+			<td><a href="/admin/report/online/{{$key}}?currency_type=money">{{$key}}<a/></td>
+			<td>{{$value.number_of_rooms}}</td>
+			<td>{{$value.online_total_count}}</td>
+			<td>{{$value.online_bot_count}}</td>
+			<td>{{$value.online_normal_count}}</td>
+		</tr>
+		{{end}}
+	</table>
+
+	<hr>
+
+	<h3>Tiền ảo</h3>
+	<table class="table">
+		<tr>
+			<th>Game</th>
+			<th>Số phòng online</th>
+			<th>Tổng người trong phòng</th>
+			<th>Tổng bot trong phòng</th>
+			<th>Tổng người chơi bình thường trong phòng</th>
+		</tr>
+		{{range $key,$value := .online.test_money}}
+		<tr>
+			<td><a href="/admin/report/online/{{$key}}?currency_type=test_money">{{$key}}<a/></td>
+			<td>{{$value.number_of_rooms}}</td>
+			<td>{{$value.online_total_count}}</td>
+			<td>{{$value.online_bot_count}}</td>
+			<td>{{$value.online_normal_count}}</td>
+		</tr>
+		{{end}}
+	</table>
+	<hr>
+
+	<h2><a href="/admin/report/active/cohort">Cohort</a></h2>
+	<table class="table" style="width:1000px;">
+				<tr>
+					<th></th>
+					<th></th>
+					<th colspan="{{ .range }}">Days since install</th>
+				</tr>
+				<tr>
+					<th>Install Date</th>
+					<th>Cohort Size</th>
+					{{ range .cohort.loop_range }}
+						<th>{{ . }}</th>
+					{{ end }}
+				</tr>
+				{{ range .cohort.days }}
+					<tr>
+						<th style="width:70px;">{{ .date_string }}</th>
+						<th style="width:70px;">{{ .cohort_size }}</th>
+						{{ range .cohort }}
+							<th style="background-color:rgba(62,127,187,{{ .alpha }});style='width:70px;'">{{ .percent }} </th>
+						{{ end }}
+					</tr>
+				{{ end }}
+			</table>
+	<hr>
+
+	<h2><a href="/admin/report/active/nru">NRU</a></h2>
+    
+	<table class="table">
+		<tr>
+			<td>Date</td>
+			{{ range $index, $element := .nru.results }}
+			<td>{{$element.date}}</td>
+			{{ end }}
+		</tr>
+		<tr>
+			<td>Active count</td>
+			{{ range $index, $element := .nru.results }}
+			<td>{{$element.count}}</td>
+			{{ end }}
+		</tr>
+	</table>
+    <div id="nru_chart_div"></div>
+    <hr>
+
+    <h2><a href="/admin/report/payment_graph">Payment report</a></h2>
+    <br/>
+    <h4><a href="/admin/money/requested">Requested Payment Link ({{.request_count}})</a></h4>
+    <h4><a href="/admin/money/replied">Replied Payment Link</a></h4>
+    <table class="table">
+		<tr>
+			<td>Date</td>
+			{{ range $index, $element := .payment_graph.results }}
+			<td>{{$element.date}}</td>
+			{{ end }}
+		</tr>
+		<tr>
+			<td>Payment</td>
+			{{ range $index, $element := .payment_graph.results }}
+			<td>{{$element.value_format}}</td>
+			{{ end }}
+		</tr>
+	</table>
+    <div id="payment_chart_div"></div>
+
+    <hr>
+
+    <h2><a href="/admin/report/purchase_graph">Purchase report</a></h2>
+    
+    <table class="table">
+		<tr>
+			<td>Date</td>
+			{{ range $index, $element := .purchase_graph.results }}
+			<td>{{$element.date}}</td>
+			{{ end }}
+		</tr>
+		<tr>
+			<td>Payment</td>
+			{{ range $index, $element := .purchase_graph.results }}
+			<td>{{$element.value_format}}</td>
+			{{ end }}
+		</tr>
+	</table>
+    <div id="purchase_chart_div"></div>
+    <hr>
+
+
+
+	</body>
+</html>

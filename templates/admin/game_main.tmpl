@@ -1,0 +1,29 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+
+    <div class="row">
+		<div class="list-group col-md-4" >
+		{{ range .games }}
+		<a href="/admin/game/{{ . }}" class="list-group-item">{{ . }} </a>
+		{{ end }}
+		</div>
+	</div>
+		<hr>
+	<div class="row">
+		<h2>Minigame</h2>
+		<div class="list-group col-md-4" >
+		{{ range .mini_games }}
+		<a href="/admin/game/{{ . }}" class="list-group-item">{{ . }} </a>
+		{{ end }}
+		</div>
+
+    </div>
+
+	</body>
+</html>

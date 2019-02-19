@@ -1,0 +1,134 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+
+				var numPages = {{ .num_pages }}
+				var page = {{ .page }}
+				var paginationUl = $(".pagination")
+				var prevPage = page - 1
+				var prevAddress = "/admin/report/payment?start_date={{ .start_date }}&start_time={{ .start_time }}"+
+				"&end_date={{ .end_date }}&end_time={{ .end_time }}&page="+prevPage
+				var preLi = $( "<li>"+
+						      "<a href=\""+prevAddress+"\" aria-label=\"Previous\">"+
+						        "<span aria-hidden=\"true\">&laquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == 1) {
+					preLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(preLi)
+				}
+
+
+				var skip = false
+				if (numPages > 10) {
+					skip = true
+				}
+				var nextLiWillBeSkipLi = false
+				for (i = 1; i <= numPages; i++) {
+					if (i <= 3 || i >= numPages - 2 || (i >= page - 2 && i <= page + 2)) {
+						var address = "/admin/report/payment?start_date={{ .start_date }}&start_time={{ .start_time }}"+
+						"&end_date={{ .end_date }}&end_time={{ .end_time }}&page="+i
+
+						var elementLi = $("<li><a href=\""+address+"\">"+i+"</a></li>")
+						if (i == page) {
+							elementLi.addClass("disabled")
+						}
+						paginationUl.append(elementLi)
+					}else if (i == page - 3 || i == page + 3) {
+						var skipLi = $( "<li class=\"disabled\">"+
+						      "<a href=\"#\" aria-label=\"Skip\">"+
+						        "<span aria-hidden=\"true\">...</span>"+
+						      "</a>"+
+						    "</li>")
+						paginationUl.append(skipLi)
+					}
+				}
+
+				var nextPage = page + 1
+				var nextAddress = "/admin/report/payment?start_date={{ .start_date }}&start_time={{ .start_time }}"+
+				"&end_date={{ .end_date }}&end_time={{ .end_time }}&page="+nextPage
+				var nextLi = $("<li>"+
+						      "<a href=\""+nextPage+"\" aria-label=\"Next\">"+
+						        "<span aria-hidden=\"true\">&raquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == numPages) {
+					nextLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(nextLi)
+				}
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/report/payment" method="GET" class="pure-form" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="start_date">Start date (Vietnamese time)</label>
+						<input type="text" id="start_date" name="start_date" class="form-control" placeholder="Start date" value="{{.start_date}}" />
+					</div>
+					<div class="form-group">
+						<label for="end_date">End date (Vietnamese time)</label>
+						<input type="text" id="end_date" name="end_date" class="form-control" placeholder="End date" value="{{.end_date}}" />
+					</div>
+					<input type="submit" value="Refresh" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+
+	<h2>Total payment</h2>
+	Tổng tiền trong game dùng để đổi thẻ: {{ .total_payment }} <br/>
+	Tổng tiền thật user đã yêu cầu đổi thẻ: {{ .real_payment }} <br/>
+	Phế đổi thẻ: {{ .tax }}
+	<hr>
+	<!-- Tổng tiền dùng để đổi thẻ đã được admin duyệt: {{.total_claimed_payment}}<br/>
+	Tổng tiền thật đã trả cho đổi thẻ: {{ .total_claimed_payment_real }} <br/> -->
+	
+		<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Player ID</th>
+				<th>Username</th>
+				<th>Payment</th>
+				<th>Money before</th>
+				<th>Money after</th>
+				<th>Status</th>
+				<th>Created at</th>
+			</tr>
+			{{range .total_list}}
+			<tr>
+				<td><a href="/admin/record/payment/{{.id}}">{{.id}}</a></td>
+				<td><a href="/admin/player/{{.player_id}}/history">{{.player_id}}</a></td>
+				<td>{{.username}}</td>
+				<td>{{.payment}}</td>
+				<td>{{.value_before}}</td>
+				<td>{{.value_after}}</td>
+				<td>{{.status}}</td>
+				<td>{{.created_at}}</td>
+			</tr>
+			{{ end }}
+		</table>
+		
+<nav>
+  <ul class="pagination">
+  </ul>
+</nav>
+	</body>
+</html>

@@ -1,0 +1,276 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+
+				var numPages = {{ .num_pages }}
+				var page = {{ .page }}
+				var paginationUl = $(".pagination")
+				var prevPage = page - 1
+				var prevAddress = "/admin/player/{{.player_id}}/history?start_date={{ .start_date }}"+
+				"&end_date={{ .end_date }}&currency_type={{.currency_type}}&page="+prevPage
+				var preLi = $( "<li>"+
+						      "<a href=\""+prevAddress+"\" aria-label=\"Previous\">"+
+						        "<span aria-hidden=\"true\">&laquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == 1) {
+					preLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(preLi)
+				}
+
+
+				var skip = false
+				if (numPages > 10) {
+					skip = true
+				}
+				var nextLiWillBeSkipLi = false
+				for (i = 1; i <= numPages; i++) {
+					if (i <= 3 || i >= numPages - 2 || (i >= page - 2 && i <= page + 2)) {
+						var address = "/admin/player/{{.player_id}}/history?start_date={{ .start_date }}"+
+						"&end_date={{ .end_date }}&currency_type={{.currency_type}}&page="+i
+
+						var elementLi = $("<li><a href=\""+address+"\">"+i+"</a></li>")
+						if (i == page) {
+							elementLi.addClass("disabled")
+						}
+						paginationUl.append(elementLi)
+					}else if (i == page - 3 || i == page + 3) {
+						var skipLi = $( "<li class=\"disabled\">"+
+						      "<a href=\"#\" aria-label=\"Skip\">"+
+						        "<span aria-hidden=\"true\">...</span>"+
+						      "</a>"+
+						    "</li>")
+						paginationUl.append(skipLi)
+					}
+				}
+
+				var nextPage = page + 1
+				var nextAddress = "/admin/player/{{.player_id}}/history?start_date={{ .start_date }}"+
+				"&end_date={{ .end_date }}&currency_type={{.currency_type}}&page="+nextPage
+				var nextLi = $("<li>"+
+						      "<a href=\""+nextPage+"\" aria-label=\"Next\">"+
+						        "<span aria-hidden=\"true\">&raquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == numPages) {
+					nextLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(nextLi)
+				}
+			});
+
+
+			/*
+			CHART
+			*/
+			// Load the Visualization API and the piechart package.
+		      google.load('visualization', '1.0', {'packages':['corechart']});
+
+		      // Set a callback to run when the Google Visualization API is loaded.
+		      google.setOnLoadCallback(drawChart);
+
+		      // Callback that creates and populates a data table,
+		      // instantiates the pie chart, passes in the data and
+		      // draws it.
+		      function drawChart() {
+
+		        // Create the data table.
+		        var data = new google.visualization.DataTable();
+				data.addColumn('string', 'Time'); // Implicit domain label col.
+				data.addColumn('number', 'Value'); // Implicit series 1 data col.
+				data.addColumn({type:'string',role:'style'}); // certainty col.
+				data.addRows([
+					{{ range .results }}
+					["{{.action}}"+" "+"{{.id}}", {{.value_after_raw}},
+					{{if eq .action "match"}}
+						{{if ge .bot_count 1}}
+						'line {stroke-color: blue}'
+						{{else}}
+						'line {stroke-color: red}'
+						{{end}}
+					{{ else }}
+						'line {stroke-color: red}'
+					{{ end }}
+					],
+					{{ end }}
+				].reverse());
+		        // Set chart options
+		        var options = {'title':'Money',
+		                       'width':1400,
+		                       'height':700,
+		                       'hAxis': {
+							      title: 'Popularity',
+							    },
+			                   legend: { position: 'bottom' }};
+
+		        // Instantiate and draw our chart, passing in some options.
+		        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+		        chart.draw(data, options);
+		      }
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+
+
+
+
+
+	<h2>Summary</h2>
+	Id: {{.player.id}} <br/>
+	Username: {{.player.username}} <br/>
+	Is Verify: {{.player.is_verify}} <br/>
+	Phone number: {{.player.phone_number}} <br/>
+	Device: {{.player.device_type}} {{.player.device_code}}<br/>
+	Ip Address: {{.player.ip_address}}<br/>
+	Type: {{if eq .player_type "bot"}} Bot {{else}} Người chơi bình thường {{end}} <br/>
+	<hr>
+	Tổng bet: {{.player.bet}} <br/>
+	Vip Point: <a href="/admin/player/{{.player.id}}/vip_point">{{.player.vip_point}}</a> <br/>
+	<hr>
+	Tiền thật đang có: {{.player.money}} <br/>
+	Tiền ảo đang có: {{.player.test_money}} <br/>
+	VipPoint đang có: {{.player.currency.vip_point}} <br/>
+
+
+
+
+	Nạp tiền: {{.purchase}}<br/>
+	Nạp tiền bằng PayBnB: {{.paybnb_purchase}}<br/>
+	Nạp tiền bằng Appvn: {{.appvn_purchase}}<br/>
+	Nạp tiền bằng iAP: {{.iap_purchase}}<br/>
+	Tiền lúc đăng ký: {{.start_game}}<br/>
+	Tiền admin cho: {{.admin_add}}<br/>
+	Tiền tặng từ OTP: {{.otp_reward}}<br/>
+	Tổng nạp tiền (nạp thẻ + tiền lúc đăng ký + tiền admin cho): <a href="/admin/player/{{.player.id}}/purchase">{{.total_purchase}}</a><br/>
+	<hr>
+	Cashout: <a href="/admin/player/{{.player.id}}/payment">{{.payment}}</a> <br/>
+	Cashout/Nạp thẻ: {{.payment_purchase}} <br/>
+	<a class="btn btn-primary" href="/admin/message?id={{.player.id}}">SendMessage</a>
+	<hr>
+	<h3>Add Money</h3>
+<div class="row">
+	<div class="col-md-4">
+		<form class="pure-form" action="/admin/player/add_money" method="POST" enctype="multipart/form-data">
+			<input type="hidden" name="page" value="{{.page}}" />
+			<input type="hidden" name="id" value="{{.player.id}}" />
+			<div class="form-group">
+				<label for="currency_type">Currency type</label> <br/>
+				<label class="radio-inline" id="currency_type">
+					<input type="radio" name="currency_type" value="money" {{if eq .currency_type "money"}} checked="checked" {{ end }}>Money
+				</label>
+				<label class="radio-inline" id="currency_type">
+					<input type="radio" name="currency_type" value="test_money" {{if eq .currency_type "test_money"}} checked="checked" {{ end }}>TestMoney
+				</label>
+				<label class="radio-inline" id="currency_type">
+					<input type="radio" name="currency_type" value="vip_point" {{if eq .currency_type "vip_point"}} checked="checked" {{ end }}>VipPoint
+				</label>
+			</div>
+			<div class="form-group">
+				<label for="amount">Amount:</label>
+				<input type="text" name="amount" class="form-control" placeholder="Amount" />
+			</div>
+	          <div class="form-group">
+	            <label for="password">Password (for action)</label>
+	            <input type="password" name="password_action" class="form-control" placeholder="Password (for action)" />
+	          </div>
+			<input type="submit" value="Add" class="btn btn-primary"/>
+		</form>
+	</div>
+</div>
+
+<hr>
+<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/player/{{.player_id}}/history" method="GET" class="pure-form" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="start_date">Start date (Vietnamese time)</label>
+						<input type="text" id="start_date" name="start_date" class="form-control" placeholder="Start date" value="{{.start_date}}" />
+					</div>
+					<div class="form-group">
+						<label for="end_date">End date (Vietnamese time)</label>
+						<input type="text" id="end_date" name="end_date" class="form-control" placeholder="End date" value="{{.end_date}}" />
+					</div>
+					<div class="form-group">
+						<label for="currency_type">Currency type</label> <br/>
+						<label class="radio-inline" id="currency_type">
+							<input type="radio" name="currency_type" value="money" {{if eq .currency_type "money"}} checked="checked" {{ end }}>Money
+						</label>
+						<label class="radio-inline" id="currency_type">
+							<input type="radio" name="currency_type" value="test_money" {{if eq .currency_type "test_money"}} checked="checked" {{ end }}>TestMoney
+						</label>
+						<label class="radio-inline" id="currency_type">
+							<input type="radio" name="currency_type" value="vip_point" {{if eq .currency_type "vip_point"}} checked="checked" {{ end }}>VipPoint
+						</label>
+					</div>
+					<input type="submit" value="Refresh" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+
+	<h2>History</h2>
+
+    <div id="chart_div"></div>
+	<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Action</th>
+				<th>Data</th>
+				<th>Change</th>
+				<th>Money before</th>
+				<th>Money after</th>
+				<th>Created at</th>
+			</tr>
+			{{range .results}}
+			<tr>
+				<td>{{.id}}</td>
+				<td>{{.action}}</td>
+				<td>
+					{{if eq .action "match"}}
+					 	<a href="/admin/match/{{.match_record_id}}">Match {{.match_record_id}}</a>,{{.game_code}},player: {{.normal_count}},bot: {{.bot_count}}
+					
+						{{range .player_ips}}
+						{{if eq .player_type "normal"}}
+						<a class="text-danger" href="/admin/player/{{.id}}/history">{{.id}}:{{.ip_address}}</a>,
+						{{end}}
+						{{ end }}
+
+					{{ end }}
+					{{if eq .action "payment"}}
+					 	<a href="/admin/record/payment/{{.payment_record_id}}">Payment {{.payment_record_id}}</a>
+					{{ end }}
+					{{if eq .action "purchase"}}
+					 	<a href="/admin/record/purchase/{{.purchase_record_id}}">Purchase {{.purchase_record_id}} {{.transaction_id}} {{.purchase_type}}</a>
+					{{ end }}
+				</td>
+				<td>{{.change}}</td>
+				<td>{{.value_before}}</td>
+				<td>{{.value_after}}</td>
+				<td>{{.created_at}}</td>
+			</tr>
+			{{ end }}
+		</table>
+
+		
+<nav>
+  <ul class="pagination">
+  </ul>
+</nav>
+	</body>
+</html>

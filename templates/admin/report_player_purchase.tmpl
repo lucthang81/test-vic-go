@@ -1,0 +1,120 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+
+				var numPages = {{ .num_pages }}
+				var page = {{ .page }}
+				var paginationUl = $(".pagination")
+				var prevPage = page - 1
+				var prevAddress = "/admin/report/player/{{.id}}/purchase?page="+prevPage
+				var preLi = $( "<li>"+
+						      "<a href=\""+prevAddress+"\" aria-label=\"Previous\">"+
+						        "<span aria-hidden=\"true\">&laquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == 1) {
+					preLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(preLi)
+				}
+
+
+				var skip = false
+				if (numPages > 10) {
+					skip = true
+				}
+				var nextLiWillBeSkipLi = false
+				for (i = 1; i <= numPages; i++) {
+					if (i <= 3 || i >= numPages - 2 || (i >= page - 2 && i <= page + 2)) {
+						var address = "/admin/report/player/{{.id}}/purchase?page="+i
+
+						var elementLi = $("<li><a href=\""+address+"\">"+i+"</a></li>")
+						if (i == page) {
+							elementLi.addClass("disabled")
+						}
+						paginationUl.append(elementLi)
+					}else if (i == page - 3 || i == page + 3) {
+						var skipLi = $( "<li class=\"disabled\">"+
+						      "<a href=\"#\" aria-label=\"Skip\">"+
+						        "<span aria-hidden=\"true\">...</span>"+
+						      "</a>"+
+						    "</li>")
+						paginationUl.append(skipLi)
+					}
+				}
+
+				var nextPage = page + 1
+				var nextAddress = "/admin/report/player/{{.id}}/purchase?page="+nextPage
+				var nextLi = $("<li>"+
+						      "<a href=\""+nextPage+"\" aria-label=\"Next\">"+
+						        "<span aria-hidden=\"true\">&raquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == numPages) {
+					nextLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(nextLi)
+				}
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{ template "nav" . }}
+
+	<h2>Summary</h2>
+	PlayerId : <a href="/admin/player/{{.id}}/history">{{.id}}</a> <br/>
+	Tổng nạp tiền bằng thẻ cào: {{ .purchase }}
+
+	<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Player ID</th>
+				<th>Username</th>
+				<th>Player Type</th>
+				<th>Purchase Type</th>
+				<th>Transaction ID</th>
+				<th>Card Code</th>
+				<th>Purchase</th>
+				<th>Money before</th>
+				<th>Money after</th>
+				<th>Created at</th>
+			</tr>
+			{{range .results}}
+			<tr>
+				<td>{{.id}}</td>
+				<td><a href="/admin/player/{{.player_id}}/history">{{.player_id}}</a></td>
+				<td>{{.username}}</td>
+				<td>{{.player_type}}</td>
+				<td>{{.purchase_type}}</td>
+				<td>{{.transaction_id}}</td>
+				<td>{{.card_code}}</td>
+				<td>{{.purchase}}</td>
+				<td>{{.value_before}}</td>
+				<td>{{.value_after}}</td>
+				<td>{{.created_at}}</td>
+			</tr>
+			{{ end }}
+		</table>
+
+
+<nav>
+  <ul class="pagination">
+  </ul>
+</nav>
+	</body>
+</html>
+
+

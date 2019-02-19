@@ -1,0 +1,204 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				var numPages = {{ .num_pages }}
+				var page = {{ .page }}
+				var paginationUl = $(".pagination")
+				var prevPage = page - 1
+				var prevAddress = "/admin/report/current_money_range?range={{.range}}&sort_type={{.sort_type}}&page="+prevPage
+				var preLi = $( "<li>"+
+						      "<a href=\""+prevAddress+"\" aria-label=\"Previous\">"+
+						        "<span aria-hidden=\"true\">&laquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == 1) {
+					preLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(preLi)
+				}
+
+
+				var skip = false
+				if (numPages > 10) {
+					skip = true
+				}
+				var nextLiWillBeSkipLi = false
+				for (i = 1; i <= numPages; i++) {
+					if (i <= 3 || i >= numPages - 2 || (i >= page - 2 && i <= page + 2)) {
+						var address = "/admin/report/current_money_range?range={{.range}}&sort_type={{.sort_type}}&page="+i
+
+						var elementLi = $("<li><a href=\""+address+"\">"+i+"</a></li>")
+						if (i == page) {
+							elementLi.addClass("disabled")
+						}
+						paginationUl.append(elementLi)
+					}else if (i == page - 3 || i == page + 3) {
+						var skipLi = $( "<li class=\"disabled\">"+
+						      "<a href=\"#\" aria-label=\"Skip\">"+
+						        "<span aria-hidden=\"true\">...</span>"+
+						      "</a>"+
+						    "</li>")
+						paginationUl.append(skipLi)
+					}
+				}
+
+				var nextPage = page + 1
+				var nextAddress = "/admin/report/current_money_range?range={{.range}}&sort_type={{.sort_type}}&page="+nextPage
+				var nextLi = $("<li>"+
+						      "<a href=\""+nextPage+"\" aria-label=\"Next\">"+
+						        "<span aria-hidden=\"true\">&raquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == numPages) {
+					nextLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(nextLi)
+				}
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+		<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/report/current_money_range" method="GET" class="pure-form" enctype="multipart/form-data">
+					<div class="form-group" >
+						<label for="sort_type">Sort</label>
+						<div class="radio">
+							<label class="radio-inline">
+								<input type="radio" name="sort_type" id="sort_type" value=""  {{if eq .sort_type ""}} checked="checked" {{ end }}> Ngày tạo <br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="sort_type" id="sort_type" value="money"  {{if eq .sort_type "money"}} checked="checked" {{ end }}> Money <br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="sort_type" id="sort_type" value="purchase"  {{if eq .sort_type "purchase"}} checked="checked" {{ end }}> Nạp thẻ<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="sort_type" id="sort_type" value="payment"  {{if eq .sort_type "payment"}} checked="checked" {{ end }}> Cashout<br/>
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="range">Range(0-100 or 1k-2500 or 10k-):</label>
+						<input type="text" name="range" class="form-control" placeholder="range" value="{{.range_field}}" />
+					</div>
+					<div class="form-group" >
+						<label for="pre_range">Predefine range</label>
+						<div class="radio">
+							<label class="radio-inline">
+								<input type="radio" name="pre_range" value="0-100"  {{if eq .range "0-100"}} checked="checked" {{ end }}>0-100<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pre_range" value="100-1k"  {{if eq .range "100-1k"}} checked="checked" {{ end }}>100-1k<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pre_range" value="1k-10k"  {{if eq .range "1k-10k"}} checked="checked" {{ end }}>1k-10k<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pre_range" value="10k-20k"  {{if eq .range "10k-20k"}} checked="checked" {{ end }}>10k-20k<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pre_range" value="20k-50k"  {{if eq .range "20k-50k"}} checked="checked" {{ end }}>20k-50k<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pre_range" value="50k-100k"  {{if eq .range "50k-100k"}} checked="checked" {{ end }}>50k-100k<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pre_range" value="100k-500k"  {{if eq .range "100k-500k"}} checked="checked" {{ end }}>100k-500k<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pre_range" value="500k-1m"  {{if eq .range "500k-1m"}} checked="checked" {{ end }}>500k-1m<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pre_range" value="1m-2m"  {{if eq .range "1m-2m"}} checked="checked" {{ end }}> 1m-2m<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pre_range" value="2m-3m"  {{if eq .range "2m-3m"}} checked="checked" {{ end }}>2m-3m<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pre_range" value="3m-5m"  {{if eq .range "3m-5m"}} checked="checked" {{ end }}>3m-5m<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="pre_range" value="5m-"  {{if eq .range "5m-"}} checked="checked" {{ end }}>5m-<br/>
+							</label>
+						</div>
+						<div class="form-group">
+							<label for="range">CurrencyType:</label>
+							<label class="radio-inline">
+								<input type="radio" name="currency_type" value="money"  {{if eq .currency_type "money"}} checked="checked" {{ end }}>Tiền thật<br/>
+							</label>
+							<label class="radio-inline">
+								<input type="radio" name="currency_type" value="test_money"  {{if eq .currency_type "test_money"}} checked="checked" {{ end }}>Tiền ảo<br/>
+							</label>
+
+						</div>
+					</div>
+					<input type="submit" value="Refresh" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+	
+
+	Total: {{.total}} </br>
+	Percent: {{.percent}} </br>
+	<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Username</th>
+				<th>Type</th>
+				<td>IsVerify</td>
+				<th>Facebook id</th>
+				<th>Phone number</th>
+				<th>Money</th>
+				<th>Nạp thẻ</th>
+				<th>Cashout</th>
+				<th>Created at</th>
+				<th colspan="2">Action</th>
+			</tr>
+			{{range .players}}
+			<tr>
+				<td><a href="/admin/player/{{.id}}/history">{{.id}}</a></td>
+				<td>{{.username}}</td>
+				<td>{{.player_type}}</td>
+				<td>{{.is_verify}}</td>
+				<td>{{.facebook_user_id}}</td>
+				<td>{{.phone_number}}</td>
+				<td>{{.money}}</td>
+				<td>{{.purchase}}</td>
+				<td>{{.payment}}</td>
+				<td>{{.created_at}}</td>
+				<td><a class="btn btn-primary" href="/admin/player/reset_device?id={{.id}}&keyword={{$.keyword}}&page={{$.page}}">ResetDevice</a></td>
+				<td><a class="btn btn-primary" href="/admin/player/{{.id}}/reset_link">ResetPasswordLink</a></td>
+				<td>
+					<form class="form-inline" action="/admin/player/add_money" method="POST" enctype="multipart/form-data">
+						<input type="hidden" name="keyword" value="{{$.keyword}}" />
+						<input type="hidden" name="page" value="{{$.page}}" />
+						<input type="hidden" name="id" value="{{.id}}" />
+						<div class="form-group">
+							<label for="amount">Amount:</label>
+							<input type="text" name="amount" class="form-control" placeholder="Amount" />
+						</div>
+				          <div class="form-group">
+				            <label for="password">Password (for action)</label>
+				            <input type="password" name="password_action" class="form-control" placeholder="Password (for action)" />
+				          </div>
+						<input type="submit" value="Add" class="btn btn-primary"/>
+					</form>
+				</td>
+
+			</tr>
+			{{ end }}
+		</table>		
+<nav>
+  <ul class="pagination">
+  </ul>
+</nav>
+	</body>
+</html>

@@ -1,0 +1,37 @@
+<html>
+	<head>
+		
+		{{template "header_link_script" .}}
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+
+		{{.currency_form}}
+
+		<hr>
+
+		{{.form}}
+
+		<h2>Scatter amount</h2>
+		{{.scatter_amounts}}
+
+		<a href="/admin/game/slot/{{ .game_code }}/scatter_amount/create?currency_type={{.currency_type}}&game_code={{.game_code}}&spin_type=normal" class="btn btn-primary">Create Normal Scatter Amount</a>
+		<a href="/admin/game/slot/{{ .game_code }}/scatter_amount/create?currency_type={{.currency_type}}&game_code={{.game_code}}&spin_type=freespin" class="btn btn-primary">Create Free Spin Scatter Amount</a>
+
+		<h2>Scatter Rate</h2>
+		{{.scatter_rates}}
+
+		<h2>Jackpot</h2>
+		{{.jackpot}}
+
+		<h2>Payout</h2>
+		{{.payout}}
+
+		<h2>More settings</h2>
+		<a href="/admin/game/{{ .game_code }}/help/edit?currency_type={{.currency_type}}" class="btn btn-primary">Edit game help</a>
+		<a href="/admin/game/{{ .game_code }}/advance_record?currency_type={{.currency_type}}" class="btn btn-primary">Advance record</a>
+
+		
+	</body>
+</html>

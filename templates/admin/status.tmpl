@@ -1,0 +1,61 @@
+<html>
+  <head>
+    {{template "header_link_script" .}}
+  </head>
+  <body style="margin: 20px;">
+    {{template "nav" .}}
+
+
+    <div class="list-group">
+      <a href="/admin/game" class="list-group-item">Game</a>
+      <a href="/admin/report" class="list-group-item">Report</a>
+      <a href="/admin/money" class="list-group-item">Money/Purchase/Payment</a>
+      <a href="/admin/push_notification" class="list-group-item">Push notification</a>
+      <a href="/admin/player" class="list-group-item">Player</a>
+      <a href="/admin/bot" class="list-group-item">Bot</a>
+      <a href="/admin/profit_player" class="list-group-item">Profit player</a>
+      <a href="/admin/match" class="list-group-item">Match</a>
+      <a href="/admin/message" class="list-group-item">Message</a>
+      <a href="/admin/popup_message" class="list-group-item">Popup Message</a>
+      <a href="/admin/congrat_queue" class="list-group-item">Congrat Queue</a>
+      <a href="/admin/otp" class="list-group-item">OTP</a>
+      <a href="/admin/general" class="list-group-item">General settings</a>
+      <a href="/admin/bot_settings" class="list-group-item">Bot settings</a>
+      <a href="/admin/admin_account" class="list-group-item">Admin account</a>
+      <a href="/admin/admin_account/activity" class="list-group-item">Admin activity</a>
+      <a href="/admin/failed_attempt" class="list-group-item">Reset failed attempts</a>
+      <a href="/admin/fake_iap" class="list-group-item">Fake IAP status</a>
+      <a href="/admin/system_profile" class="list-group-item">System profile (for Devs only)</a>
+      <a href="/beta/web_interface" class="list-group-item">Beta web interface</a>
+    </div>
+    
+
+    <h2>Version</h2>
+    <div>
+      App Version: {{ .AppVersion }} <br/> <a href="/admin/app_version" class="btn btn-info" role="button">Edit</a>
+    </div>
+    <h2>Maintenance</h2>
+    <div>
+    Status: {{if eq .IsScheduled false}} Nothing is scheduled {{ else }} Scheduled {{ end }}<br/>
+    {{if eq .IsScheduled true}}
+      {{ if eq .IsOn true }}
+      Maintenance mode is On<br/>
+      Will end in: {{ .EndIn }}<br/>
+      {{ else }}
+        Maintenance mode is Off<br/>
+        Will start in: {{ .StartIn }}<br/>
+      {{ end }}
+          Start (Vietnamese time): {{ .MaintenanceStartDate }} </br>
+          End (Vietnamese time): {{ .MaintenanceEndDate }} </br>
+    {{ end }}
+    <a href="/admin/maintenance" class="btn btn-info" role="button">Edit maintenance</a>
+    </div>
+
+    <h2>Server</h2>
+    <div>
+      Number of request: {{.NumberOfRequests}}
+    </br>
+      Average handle time: {{.AverageRequestHandleTime}}s
+    </div>
+  </body>
+</html>

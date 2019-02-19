@@ -1,0 +1,79 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+    <div class="row">
+      <div class="col-md-4">
+		<h3>Maintenance status</h3>
+		Status: {{if eq .IsScheduled false}} Nothing is scheduled {{ else }} Scheduled {{ end }}<br/>
+	    {{if eq .IsScheduled true}}
+	      {{ if eq .IsOn true }}
+	      Maintenance mode is On <br/>
+	      Will end in: {{ .EndIn }}<br/>
+	      {{ else }}
+	        Maintenance mode is Off<br/>
+	        Will start in: {{ .StartIn }}<br/>
+	      {{ end }}
+	          Start (Vietnamese time): {{ .MaintenanceStartDate }} </br>
+	          End (Vietnamese time): {{ .MaintenanceEndDate }} </br>
+		<form action="/admin/maintenance/stop" method="POST" enctype="multipart/form-data">
+			<input type="submit" value="Stop maintenance" class="btn btn-danger"/>
+		</form>
+	    {{ end }}
+
+		<h3>Quick start a maintenance (Start after 10m from now on)</h3>
+		<form action="/admin/maintenance/quick_start" method="POST" enctype="multipart/form-data">
+	          <div class="form-group">
+	            <label for="duration">Duration (example: 3h25m45s)</label>
+	            <input type="text" id="duration" name="duration" class="form-control" placeholder="Duration" aria-describedby="basic-addon1">
+	          </div>
+			<input type="submit" value="Save changes" class="btn btn-primary"/>
+		</form>
+
+		<br/>
+		<br/>
+		<br/>
+		<h3>Schedule start a maintenance</h3>
+		<form action="/admin/maintenance/schedule_start" method="POST" enctype="multipart/form-data">
+			<div class="form-group">
+	            <label for="start_date">Start date (Vietnamese time)</label>
+	            <input type="text" id="start_date" name="start_date" class="form-control" placeholder="Start date" aria-describedby="basic-addon1">
+	          </div>
+	          <div class="form-group">
+	            <label for="start_time">Time (23:59:59):</label>
+	            <input type="text" id="start_time" name="start_time" class="form-control" placeholder="Start time" aria-describedby="basic-addon1">
+	          </div>
+	          <div class="form-group">
+	            <label for="duration">Duration (example: 3h25m45s)</label>
+	            <input type="text" id="duration" name="duration" class="form-control" placeholder="Duration" aria-describedby="basic-addon1">
+	          </div>
+
+			<input type="submit" value="Submit" class="btn btn-primary"/>
+		</form>
+
+
+		<br/>
+		<br/>
+		<br/>
+		<h3>Force start a maintenance right away</h3>
+		<form action="/admin/maintenance/force_start" method="POST" enctype="multipart/form-data">
+			<div class="form-group">
+	            <label for="duration">Duration (example: 3h25m45s)</label>
+	            <input type="text" id="duration" name="duration" class="form-control" placeholder="Duration" aria-describedby="basic-addon1">
+	          </div>
+			<input type="submit" value="Save changes" class="btn btn-primary"/>
+		</form>
+		</div>
+	</div>
+	</body>
+</html>

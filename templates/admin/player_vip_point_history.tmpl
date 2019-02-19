@@ -1,0 +1,137 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+		<script>
+			$(document).ready(function(){
+				$( "#start_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+				
+				$( "#end_date" ).datepicker({
+				dateFormat: "dd-mm-yy"
+				});
+
+				var numPages = {{ .num_pages }}
+				var page = {{ .page }}
+				var paginationUl = $(".pagination")
+				var prevPage = page - 1
+				var prevAddress = "/admin/player/{{.player_id}}/vip_point?start_date={{ .start_date }}"+
+				"&end_date={{ .end_date }}&page="+prevPage
+				var preLi = $( "<li>"+
+						      "<a href=\""+prevAddress+"\" aria-label=\"Previous\">"+
+						        "<span aria-hidden=\"true\">&laquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == 1) {
+					preLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(preLi)
+				}
+
+
+				var skip = false
+				if (numPages > 10) {
+					skip = true
+				}
+				var nextLiWillBeSkipLi = false
+				for (i = 1; i <= numPages; i++) {
+					if (i <= 3 || i >= numPages - 2 || (i >= page - 2 && i <= page + 2)) {
+						var address = "/admin/player/{{.player_id}}/vip_point?start_date={{ .start_date }}"+
+						"&end_date={{ .end_date }}&page="+i
+
+						var elementLi = $("<li><a href=\""+address+"\">"+i+"</a></li>")
+						if (i == page) {
+							elementLi.addClass("disabled")
+						}
+						paginationUl.append(elementLi)
+					}else if (i == page - 3 || i == page + 3) {
+						var skipLi = $( "<li class=\"disabled\">"+
+						      "<a href=\"#\" aria-label=\"Skip\">"+
+						        "<span aria-hidden=\"true\">...</span>"+
+						      "</a>"+
+						    "</li>")
+						paginationUl.append(skipLi)
+					}
+				}
+
+				var nextPage = page + 1
+				var nextAddress = "/admin/player/{{.player_id}}/vip_point?start_date={{ .start_date }}"+
+				"&end_date={{ .end_date }}&page="+nextPage
+				var nextLi = $("<li>"+
+						      "<a href=\""+nextPage+"\" aria-label=\"Next\">"+
+						        "<span aria-hidden=\"true\">&raquo;</span>"+
+						      "</a>"+
+						    "</li>")
+				if (page == numPages) {
+					nextLi.addClass("disabled")
+				}
+
+				if (numPages > 0) {
+					paginationUl.append(nextLi)
+				}
+			});
+		</script>
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+<div class="row">
+			<div class="col-md-4">
+				<form action="/admin/player/{{.player_id}}/vip_point" method="GET" class="pure-form" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="start_date">Start date (Vietnamese time)</label>
+						<input type="text" id="start_date" name="start_date" class="form-control" placeholder="Start date" value="{{.start_date}}" />
+					</div>
+					<div class="form-group">
+						<label for="end_date">End date (Vietnamese time)</label>
+						<input type="text" id="end_date" name="end_date" class="form-control" placeholder="End date" value="{{.end_date}}" />
+					</div>
+					<input type="submit" value="Refresh" class="btn btn-primary"/>
+				</form>
+			</div>
+		</div>
+
+
+	<h2>History</h2>
+	<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Action</th>
+				<th>Data</th>
+				<th>Change</th>
+				<th>VipPoint before</th>
+				<th>VipPoint after</th>
+				<th>Created at</th>
+			</tr>
+			{{range .results}}
+			<tr>
+				<td>{{.id}}</td>
+				<td>{{.action}}</td>
+				<td>{{.additional_data}}
+					{{if eq .action "match"}}
+					 	<a href="/admin/match/{{.match_record_id}}">Match {{.match_record_id}}</a>,{{.game_code}}
+					{{ end }}
+					{{if eq .action "payment"}}
+					 	<a href="/admin/money/gift_payment/requested/{{.payment_id}}">Payment {{.payment_id}}</a>
+					 	{{if eq .decline true}}
+					 	(Decline)
+					 	{{end}}
+					{{ end }}
+				</td>
+				<td>{{.change}}</td>
+				<td>{{.vip_point_before}}</td>
+				<td>{{.vip_point_after}}</td>
+				<td>{{.created_at}}</td>
+			</tr>
+			{{ end }}
+		</table>
+
+		
+<nav>
+  <ul class="pagination">
+  </ul>
+</nav>
+	</body>
+</html>

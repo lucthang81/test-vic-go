@@ -1,0 +1,43 @@
+<html>
+  <head>
+    {{template "header_link_script" .}}
+    <script>
+    </script>
+  </head>
+  <body style="margin: 20px;">
+    {{template "nav" .}}
+    <div class="row">
+      <div class="col-md-4">
+        <form action="/admin/money/payment_requirement/edit" method="POST" class="pure-form" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="min_money_left">Min money left:</label>
+              <input type="text" name="min_money_left" class="form-control" placeholder="Min money left" value="{{.min_money_left}}"/>
+          </div>
+          <div class="form-group">
+            <label for="min_money_left">Min days since last purchase:</label>
+              <input type="text" name="min_days_since_last_purchase" class="form-control" placeholder="Min days since last purchase" value="{{.min_days_since_last_purchase}}"/>
+          </div>
+          <div class="form-group">
+            <label for="min_money_left">Min total bet:</label>
+              <input type="text" name="min_total_bet" class="form-control" placeholder="Min total bet" value="{{.min_total_bet}}"/>
+          </div>
+          <div class="form-group">
+            <label for="purchase_multiplier">Purchase multiplier:</label>
+              <input type="text" name="purchase_multiplier" class="form-control" placeholder="Purchase multiplier" value="{{.purchase_multiplier}}"/>
+          </div>
+          <div class="form-group">
+            <label for="max_payment_count_day">Max payment count per day:</label>
+              <input type="text" name="max_payment_count_day" class="form-control" placeholder="Max payment count per day" value="{{.max_payment_count_day}}"/>
+          </div>
+          <div class="form-group">
+            <label for="rule_text">Rule text:</label>
+            <textarea id="help" name="rule_text" class="form-control" rows="20">{{.rule_text}}</textarea>
+          </div>
+
+          
+          <input type="submit" value="submit" class="btn btn-primary"/>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<html>
+	<head>
+		{{template "header_link_script" .}}
+
+	</head>
+	<body style="margin: 20px;">
+		{{ template "nav" .}}
+		<div class="row">
+			<div class="col-md-4">
+				<div class="list-group">
+				<a href="/admin/money/purchase_type" class="list-group-item">Purchase type</a>
+				<a href="/admin/money/card_type" class="list-group-item">Card type</a>
+				<a href="/admin/money/card" class="list-group-item">Cards list</a>
+				<a href="/admin/money/card_summary" class="list-group-item">Cards summary</a>
+				<a href="/admin/money/card_history" class="list-group-item">Cards history</a>
+				<a href="/admin/money/payment_requirement/edit" class="list-group-item">Payment Requirement</a>
+				<a href="/admin/money/requested" class="list-group-item">Requested payments</a>
+				<a href="/admin/money/replied" class="list-group-item">Replied payments</a>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4">
+				<div class="list-group">
+				<a href="/admin/money/gift_payment" class="list-group-item">Cashout vật phẩm</a>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>

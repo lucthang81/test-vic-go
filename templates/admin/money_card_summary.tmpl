@@ -1,0 +1,42 @@
+<html>
+	<head>
+		{{ template "header_link_script" .}}
+
+	</head>
+	<body style="margin: 20px;">
+		{{template "nav" .}}
+
+		<a class="btn btn-primary" href="/admin/money/card/create">Create</a>
+		<a class="btn btn-primary" href="/admin/money/card/import">Import</a>
+		<hr>
+
+		Tổng số tiền của tất cả thẻ còn lại: {{.unclaimed_sum}} <br/>
+
+		<table class="table">
+			<tr>
+				<th>Telco</th>
+				<th>Value</th>
+				<th>Card code</th>
+				<!-- <th>Tổng số thẻ cào đã add vào</th>
+				<th>Tổng tiền thẻ cào đã add vào</th> -->
+				<th>Số thẻ còn lại để trả thưởng</th>
+				<th>Tổng tiền thẻ còn lại để trả thưởng</th>
+				<!-- <th>Số thẻ đã dùng để trao thưởng</th>
+				<th>Tổng tiền thẻ đã trao thưởng</th> -->
+			</tr>
+			{{range .results}}
+			<tr>
+				<td>{{.telco}}</td>
+				<td>{{.real_money}}</td>
+				<td>{{.card_code}}</td>
+				<!-- <td>{{.count}}</td>
+				<td>{{.sum}}</td> -->
+				<td>{{.unclaimed_count}}</td>
+				<td>{{.unclaimed_sum}}</td>
+				<!-- <td>{{.claimed_count}}</td>
+				<td>{{.claimed_sum}}</td> -->
+			</tr>
+			{{ end }}
+		</table>
+	</body>
+</html>
